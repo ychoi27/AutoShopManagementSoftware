@@ -1,7 +1,7 @@
 # AutoShopManagementSoftware
 configuration of our project environment
 
-java jdk 1.8.0
+java jdk 1.8.0_131
 
 sqllite_3.20.1
 
