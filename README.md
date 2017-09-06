@@ -21,12 +21,12 @@ https://www.tutorialspoint.com/sqlite/sqlite_installation.htm
 
 # process setting up the environment for our project
 
-1. install java
-    a. copy java file
-    b. set up path
-2. install sqlite
-    a. copy sqlite folder
-    b. set up path
-3. install sqlite manager
-4. install git
+1. install java<br />
+    a. copy java file<br />
+    b. set up path<br />
+2. install sqlite<br />
+    a. copy sqlite folder<br />
+    b. set up path<br />
+3. install sqlite manager<br />
+4. install git<br />
   
