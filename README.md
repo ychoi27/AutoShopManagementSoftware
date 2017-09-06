@@ -1,4 +1,4 @@
-# AutoShopManagementSoftware
+# ManagementAutoShopSoftware
 #configuration of our project environment
 
 java jdk 1.8.0
