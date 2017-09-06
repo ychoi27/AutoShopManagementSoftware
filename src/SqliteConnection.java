@@ -15,7 +15,7 @@ public class SqliteConnection {
         Connection conn = null;
         try {
             // db parameters
-            String url = "jdbc:sqlite:D:/SoftwareEngineeringClass/AutoShopManagementSoftware/database/db.db";
+            String url = "jdbc:sqlite:C:/SoftwareProject/AutoShopManagementSoftware/database/db.db";
             // create a connection to the database
             conn = DriverManager.getConnection(url);
             
@@ -48,7 +48,7 @@ public class SqliteConnection {
     	        stmt = con.createStatement();
     	        ResultSet rs = stmt.executeQuery(query);
     	        while (rs.next()) {
-    	            String name = rs.getString("id");
+    	            String name = rs.getString("id")+" "+rs.getString("firstname")+" "+rs.getString("lastname");
     	            System.out.println(name);
     	        }
     	    } catch (SQLException e ) {
