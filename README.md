@@ -29,4 +29,5 @@ https://www.tutorialspoint.com/sqlite/sqlite_installation.htm
     b. set up path<br />
 3. install sqlite manager<br />
 4. install git<br />
+5. install eclipase
   
