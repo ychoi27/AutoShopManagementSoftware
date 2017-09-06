@@ -29,5 +29,14 @@ https://www.tutorialspoint.com/sqlite/sqlite_installation.htm
     b. set up path<br />
 3. install sqlite manager<br />
 4. install git<br />
+    a. initial commit
+    b. clone
+        git clone "gitaddress" "your directory"
+        example:
+        git clone https://github.com/ychoi27/AutoShopManagementSoftware.git /home/user/Desktop/mainsitegit
+    c.commit
+        git commit -a -m "Commit comment."
+    d.push
+        git push
 5. install eclipase
   
