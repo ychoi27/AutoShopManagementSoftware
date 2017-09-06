@@ -31,7 +31,7 @@ https://www.tutorialspoint.com/sqlite/sqlite_installation.htm
 4. install git<br />
     a. initial commit<br />
     b. clone<br />
-        git clone "gitaddress" "your directory"<br />
+        git clone -b "branch name" "gitaddress" "your directory"<br />
         example:<br />
         git clone https://github.com/ychoi27/AutoShopManagementSoftware.git /home/user/Desktop/mainsitegit<br />
     c.commit<br />
