@@ -1,5 +1,5 @@
 # AutoShopManagementSoftware
-configuration of our project environment
+#configuration of our project environment
 
 java jdk 1.8.0
 
@@ -16,3 +16,17 @@ https://www.youtube.com/watch?v=rWboGsc6CqI
 
 SQLite installation tutorial
 https://www.tutorialspoint.com/sqlite/sqlite_installation.htm
+
+
+
+# process setting up the environment for our project
+
+1. install java
+    a. copy java file
+    b. set up path
+2. install sqlite
+    a. copy sqlite folder
+    b. set up path
+3. install sqlite manager
+4. install git
+  
