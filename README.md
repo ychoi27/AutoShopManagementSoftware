@@ -30,13 +30,14 @@ https://www.tutorialspoint.com/sqlite/sqlite_installation.htm
 3. install sqlite manager<br />
 4. install git<br />
     a. initial commit<br />
-    b. clone<br />
+    b. add git . # this command will add all chagnes files under the branch.
+    c. clone<br />
         git clone -b "branch name" "gitaddress" "your directory"<br />
         example:<br />
         git clone https://github.com/ychoi27/AutoShopManagementSoftware.git /home/user/Desktop/mainsitegit<br />
-    c.commit<br />
+    d.commit<br />
         git commit -a -m "Commit comment."<br />
-    d.push<br />
+    e.push<br />
         git push<br />
 5. install eclipase<br />
 
