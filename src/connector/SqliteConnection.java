@@ -1,51 +1,53 @@
+package connector;
+
 import java.sql.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import util.ConfigManager;
  
 /**
  *
  * @author sqlitetutorial.net
  */
 public class SqliteConnection {
-     /**
-     * Connect to a sample database
-     */
-    public static Connection connect() {
-        Connection conn = null;
+    private Connection conn;
+    
+    public SqliteConnection()
+    {
+        this.conn = null;
+    }   
+    public Connection connect(String url) 
+    {
         try {
-            // db parameters
-            String url = "jdbc:sqlite:C:/SoftwareProject/AutoShopManagementSoftware/database/db.db";
             // create a connection to the database
             conn = DriverManager.getConnection(url);
-            
             System.out.println("Connection to SQLite has been established.");
             
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-        } finally {
-            try {
+        } 
+        return conn;
+    }
+    public void close()
+    {
+        try {
                 if (conn != null) {
-                	conn.isClosed();
-                    //conn.close();
+                    conn.close();
                 }
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
             }
-        }
-        return conn;
     }
-    /**
-     * @param args the command line arguments
-     */
-    public static void viewTable(Connection con, String dbName)
+    
+    public void viewTable(String dbName)
     	    throws SQLException {
 
     	    Statement stmt = null;
     	    String query = 
     	    		"SELECT * FROM mechanic";
     	    try {
-    	        stmt = con.createStatement();
+    	        stmt = conn.createStatement();
     	        ResultSet rs = stmt.executeQuery(query);
     	        while (rs.next()) {
     	            String name = rs.getString("id")+" "+rs.getString("firstname")+" "+rs.getString("lastname");
@@ -58,6 +60,10 @@ public class SqliteConnection {
     	    }
     	}
     public static void main(String[] args) throws SQLException {
-        viewTable(connect(),"db");
+        ConfigManager config = new ConfigManager();
+        config.load();
+        SqliteConnection conn = new SqliteConnection();
+        conn.connect(config.getProp("dbpath"));
+        conn.viewTable("db");
     }
 }
