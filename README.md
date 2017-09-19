@@ -23,23 +23,23 @@ https://www.tutorialspoint.com/sqlite/sqlite_installation.htm
 
 # 1. install java
     1. copy java file
-    2. set up path<br />
-# 2. install sqlite<br />
-    1. copy sqlite folder<br />
-    b. set up path<br />
-# 3. install sqlite manager<br />
-# 4. install git<br />
-    a. initial commit<br />
+    2. set up path
+# 2. install sqlite
+    1. copy sqlite folder
+    b. set up path
+# 3. install sqlite manager
+# 4. install git
+    a. initial commit
     b. add git . # this command will add all chagnes files under the branch.
-    c. clone<br />
-        git clone -b "branch name" "gitaddress" "your directory"<br />
-        example:<br />
-        git clone https://github.com/ychoi27/AutoShopManagementSoftware.git /home/user/Desktop/mainsitegit<br />
-    d.commit<br />
-        git commit -a -m "Commit comment."<br />
-    e.push<br />
-        git push<br />
-# 5. install eclipase<br />
+    c. clone
+        git clone -b "branch name" "gitaddress" "your directory"
+        example:
+        git clone https://github.com/ychoi27/AutoShopManagementSoftware.git /home/user/Desktop/mainsitegit
+    d.commit
+        git commit -a -m "Commit comment."
+    e.push
+        git push
+# 5. install eclipase
 
 
 
