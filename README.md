@@ -1,5 +1,5 @@
 # ManagementAutoShopSoftware
-#configuration of our project environment
+# configuration of our project environment
 
 java jdk 1.8.0
 
@@ -21,14 +21,14 @@ https://www.tutorialspoint.com/sqlite/sqlite_installation.htm
 
 # process setting up the environment for our project
 
-#1. install java
+# 1. install java
     1. copy java file
     2. set up path<br />
-#2. install sqlite<br />
+# 2. install sqlite<br />
     1. copy sqlite folder<br />
     b. set up path<br />
-#3. install sqlite manager<br />
-#4. install git<br />
+# 3. install sqlite manager<br />
+# 4. install git<br />
     a. initial commit<br />
     b. add git . # this command will add all chagnes files under the branch.
     c. clone<br />
@@ -39,7 +39,7 @@ https://www.tutorialspoint.com/sqlite/sqlite_installation.htm
         git commit -a -m "Commit comment."<br />
     e.push<br />
         git push<br />
-#5. install eclipase<br />
+# 5. install eclipase<br />
 
 
 
