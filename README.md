@@ -40,8 +40,3 @@ https://www.tutorialspoint.com/sqlite/sqlite_installation.htm
     e.push
         git push
 # 5. install eclipase
-
-
-
-Susan here! just testing to see if i can edit this file
-Jane testing.
