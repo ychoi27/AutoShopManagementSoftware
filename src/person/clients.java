@@ -9,6 +9,9 @@ package person;
  *
  * @author ck437
  */
-public class clients {
+public class clients implements person {
     
+    
+    
+    public void getFirstName()
 }

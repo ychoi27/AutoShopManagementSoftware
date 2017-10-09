@@ -74,7 +74,7 @@
                   </Group>
                   <Group type="102" attributes="0">
                       <Component id="addJobButton" min="-2" pref="100" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="450" max="32767" attributes="0"/>
                       <Component id="refreshTable" min="-2" pref="100" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="searchInput" min="-2" pref="210" max="-2" attributes="0"/>
@@ -123,7 +123,7 @@
                               <Component id="jobDescription" max="32767" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="331" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="searchInput" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="searchButton" alignment="3" min="-2" max="-2" attributes="0"/>

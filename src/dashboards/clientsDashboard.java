@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
 import util.ConfigManager;
@@ -43,18 +45,31 @@ public class clientsDashboard extends javax.swing.JFrame {
             
             clientTable.setModel(DbUtils.resultSetToTableModel(rs));
             
-            String q2 ="select year, color, brand, model, plate, vin from car";
+            String q2 ="select car_id, year, color, brand, model, plate, "
+                    + "vin from car limit 0";
             pst = conn.prepareStatement(q2);
             rs =pst.executeQuery();
             carTable.setModel(DbUtils.resultSetToTableModel(rs));
-            
+         
             
         }catch(Exception e){
             JOptionPane.showConfirmDialog(null, e);
         }
     
     }
-    
+    public void displayCarTable(){
+        //display cars registered with the selected customer 
+        String DisplayCars="select car_id, year, color, brand, model, plate, vin "
+                + "from car "
+                + "where client_id = "+clientId.getText();
+        try {
+            pst = conn.prepareStatement(DisplayCars);
+            rs =pst.executeQuery();
+            carTable.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (SQLException ex) {
+            Logger.getLogger(clientsDashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -67,6 +82,32 @@ public class clientsDashboard extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        clientTable = new javax.swing.JTable();
+        jobsButton = new javax.swing.JButton();
+        inventoryButton = new javax.swing.JButton();
+        customerButton = new javax.swing.JButton();
+        signoutButton = new javax.swing.JButton();
+        backButton = new javax.swing.JButton();
+        jPanel6 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        carTable = new javax.swing.JTable();
+        carEditPanel = new javax.swing.JPanel();
+        car_year = new javax.swing.JTextField();
+        car_id = new javax.swing.JTextField();
+        car_color = new javax.swing.JTextField();
+        car_brand = new javax.swing.JTextField();
+        car_model = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        car_plate = new javax.swing.JTextField();
+        jLabel21 = new javax.swing.JLabel();
+        car_vin = new javax.swing.JTextField();
+        jPanel7 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         firstName = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -93,38 +134,20 @@ public class clientsDashboard extends javax.swing.JFrame {
         phone = new javax.swing.JTextField();
         middleName = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        clientId = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        clientTable = new javax.swing.JTable();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        carTable = new javax.swing.JTable();
-        jPanel4 = new javax.swing.JPanel();
-        clientAdd1 = new javax.swing.JButton();
-        clientEdit1 = new javax.swing.JButton();
-        clientClear1 = new javax.swing.JButton();
-        clientDelete1 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
-        jLabel21 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
+        clientId = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
-        javax.swing.JButton clientSearch = new javax.swing.JButton();
-        javax.swing.JTextField search1 = new javax.swing.JTextField();
+        clientSearch = new javax.swing.JButton();
+        client_search = new javax.swing.JTextField();
         clientAdd = new javax.swing.JButton();
-        javax.swing.JButton clientEdit = new javax.swing.JButton();
-        javax.swing.JButton clientClear = new javax.swing.JButton();
+        clientUpdate = new javax.swing.JButton();
+        clientClear = new javax.swing.JButton();
         javax.swing.JButton clientDelete = new javax.swing.JButton();
+        showAll = new javax.swing.JButton();
+        carAdd = new javax.swing.JButton();
+        carUpdate = new javax.swing.JButton();
+        carClear = new javax.swing.JButton();
+        carDelete = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -150,6 +173,215 @@ public class clientsDashboard extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        clientTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        clientTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                clientTableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(clientTable);
+
+        jobsButton.setText("JOBS");
+        jobsButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jobsButtonMouseClicked(evt);
+            }
+        });
+        jobsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jobsButtonActionPerformed(evt);
+            }
+        });
+
+        inventoryButton.setText("INVENTORY");
+        inventoryButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inventoryButtonActionPerformed(evt);
+            }
+        });
+
+        customerButton.setText("CUSTOMERS");
+        customerButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                customerButtonActionPerformed(evt);
+            }
+        });
+
+        signoutButton.setText("SIGN OUT");
+
+        backButton.setText("BACK");
+
+        carTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        carTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                carTableMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(carTable);
+
+        car_year.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+
+        car_id.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        car_id.setToolTipText("");
+        car_id.setMaximumSize(new java.awt.Dimension(6, 32));
+        car_id.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                car_idActionPerformed(evt);
+            }
+        });
+
+        car_color.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+
+        car_brand.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+
+        car_model.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+
+        jLabel15.setText("car_id");
+        jLabel15.setMaximumSize(new java.awt.Dimension(40, 26));
+        jLabel15.setMinimumSize(new java.awt.Dimension(40, 26));
+        jLabel15.setPreferredSize(new java.awt.Dimension(40, 26));
+
+        jLabel16.setText("year");
+
+        jLabel17.setText("color");
+
+        jLabel18.setText("brand");
+
+        jLabel19.setText("model");
+
+        jLabel20.setText("plate");
+
+        car_plate.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+
+        jLabel21.setText("vin");
+
+        car_vin.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        car_vin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                car_vinActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout carEditPanelLayout = new javax.swing.GroupLayout(carEditPanel);
+        carEditPanel.setLayout(carEditPanelLayout);
+        carEditPanelLayout.setHorizontalGroup(
+            carEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(carEditPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(carEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(carEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(carEditPanelLayout.createSequentialGroup()
+                            .addGroup(carEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(carEditPanelLayout.createSequentialGroup()
+                                    .addGroup(carEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGap(9, 9, 9))
+                                .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(carEditPanelLayout.createSequentialGroup()
+                                    .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGap(15, 15, 15))
+                                .addGroup(carEditPanelLayout.createSequentialGroup()
+                                    .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGap(11, 11, 11)))
+                            .addGap(15, 15, 15))
+                        .addGroup(carEditPanelLayout.createSequentialGroup()
+                            .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGap(69, 69, 69)))
+                    .addGroup(carEditPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(69, 69, 69)))
+                .addGroup(carEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(car_id, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(car_year, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(car_color, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(car_brand, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(car_model, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(car_plate, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(car_vin, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        carEditPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {car_brand, car_color, car_id, car_model, car_plate, car_vin, car_year});
+
+        carEditPanelLayout.setVerticalGroup(
+            carEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(carEditPanelLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(carEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(car_id, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(carEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(car_year)
+                    .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(carEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(car_color)
+                    .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(carEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(car_brand)
+                    .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(carEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(car_model)
+                    .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(carEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(car_plate)
+                    .addComponent(jLabel20))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(carEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(car_vin, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        carEditPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {car_brand, car_color, car_id, car_model, car_plate, car_year});
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 521, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(carEditPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(58, 58, 58)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(43, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(carEditPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
         firstName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 firstNameActionPerformed(evt);
@@ -158,7 +390,6 @@ public class clientsDashboard extends javax.swing.JFrame {
 
         jLabel1.setText("Name");
 
-        lastName.setText("last");
         lastName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lastNameActionPerformed(evt);
@@ -250,13 +481,13 @@ public class clientsDashboard extends javax.swing.JFrame {
 
         jLabel14.setText("Mid");
 
+        jLabel2.setText("Client Id");
+
         clientId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 clientIdActionPerformed(evt);
             }
         });
-
-        jLabel2.setText("Client Id");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -265,73 +496,75 @@ public class clientsDashboard extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(39, 39, 39)
+                        .addComponent(clientId, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(31, 31, 31)
-                                .addComponent(jLabel4)
-                                .addGap(91, 91, 91)
-                                .addComponent(jLabel14)
-                                .addGap(136, 136, 136)
-                                .addComponent(jLabel5))
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(address1, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(clientId, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jLabel3)
+                                .addGap(46, 46, 46)
+                                .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(phone, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(4, 4, 4))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(42, 42, 42)
-                                .addComponent(firstName, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(middleName, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lastName, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel3)
-                                    .addGap(46, 46, 46)
-                                    .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel6)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(address1, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(phone, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel10)
-                                    .addComponent(jLabel12))
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel12))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(zip, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel11)
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(country, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(zip, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(19, 19, 19)
-                                        .addComponent(jLabel11)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(country, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(city, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(41, 41, 41)
                                         .addComponent(jLabel9)
                                         .addGap(18, 18, 18)
-                                        .addComponent(state))
-                                    .addComponent(address2, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(clientType)))
-                            .addComponent(jLabel13))
-                        .addGap(16, 76, Short.MAX_VALUE))))
+                                        .addComponent(state, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(address2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(clientType, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(city, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(111, 111, 111)
+                        .addComponent(jLabel4)
+                        .addGap(91, 91, 91)
+                        .addComponent(jLabel14)
+                        .addGap(136, 136, 136)
+                        .addComponent(jLabel5))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(42, 42, 42)
+                        .addComponent(firstName, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(middleName, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lastName, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel13))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
+                .addGap(13, 13, 13)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(clientId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(29, 29, 29)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel5)
@@ -374,173 +607,10 @@ public class clientsDashboard extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(clientType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addGap(34, 34, 34))
         );
 
         email.getAccessibleContext().setAccessibleName("client_id");
-
-        clientTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        clientTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                clientTableMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(clientTable);
-
-        carTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        carTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                carTableMouseClicked(evt);
-            }
-        });
-        jScrollPane2.setViewportView(carTable);
-
-        clientAdd1.setText("add");
-        clientAdd1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                clientAdd1ActionPerformed(evt);
-            }
-        });
-
-        clientEdit1.setText("edit");
-        clientEdit1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                clientEdit1ActionPerformed(evt);
-            }
-        });
-
-        clientClear1.setText("clear");
-        clientClear1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                clientClear1ActionPerformed(evt);
-            }
-        });
-
-        clientDelete1.setText("delete");
-        clientDelete1.setToolTipText("");
-        clientDelete1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                clientDelete1ActionPerformed(evt);
-            }
-        });
-
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
-
-        jLabel15.setText("car_id");
-
-        jLabel16.setText("year");
-
-        jLabel17.setText("color");
-
-        jLabel18.setText("brand");
-
-        jLabel19.setText("model");
-
-        jLabel20.setText("plate");
-
-        jLabel21.setText("vin");
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel18)
-                                .addComponent(jLabel19))
-                            .addComponent(jLabel16)
-                            .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel21)
-                            .addComponent(jLabel20))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
-                            .addComponent(jTextField3)
-                            .addComponent(jTextField1)
-                            .addComponent(jTextField5)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTextField7)))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel15)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(clientClear1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(clientDelete1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(clientEdit1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(clientAdd1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)))
-                .addGap(16, 16, 16))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(clientAdd1)
-                    .addComponent(jLabel15))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(clientEdit1))
-                    .addComponent(jLabel16, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(clientClear1)
-                            .addComponent(jLabel17)))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(clientDelete1)
-                    .addComponent(jLabel18))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel19))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel20))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel21)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        );
 
         clientSearch.setText("search");
         clientSearch.addActionListener(new java.awt.event.ActionListener() {
@@ -549,15 +619,10 @@ public class clientsDashboard extends javax.swing.JFrame {
             }
         });
 
-        search1.setText("search");
-        search1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                search1ActionPerformed(evt);
-            }
-        });
-        search1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                search1KeyReleased(evt);
+        client_search.setText("FirstName");
+        client_search.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                client_searchMouseClicked(evt);
             }
         });
 
@@ -568,10 +633,10 @@ public class clientsDashboard extends javax.swing.JFrame {
             }
         });
 
-        clientEdit.setText("edit");
-        clientEdit.addActionListener(new java.awt.event.ActionListener() {
+        clientUpdate.setText("update");
+        clientUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                clientEditActionPerformed(evt);
+                clientUpdateActionPerformed(evt);
             }
         });
 
@@ -594,34 +659,102 @@ public class clientsDashboard extends javax.swing.JFrame {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(client_search, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(85, 85, 85)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(clientSearch, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                    .addComponent(clientEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(clientSearch, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(clientUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
                     .addComponent(clientClear, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(clientDelete, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(clientAdd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(search1)))
+                    .addComponent(clientAdd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addComponent(search1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(client_search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(clientSearch)
                 .addGap(18, 18, 18)
                 .addComponent(clientAdd)
                 .addGap(9, 9, 9)
-                .addComponent(clientEdit)
+                .addComponent(clientUpdate)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(clientClear)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(clientDelete)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(89, Short.MAX_VALUE))
         );
 
-        clientEdit.getAccessibleContext().setAccessibleName("clientEdit");
+        clientUpdate.getAccessibleContext().setAccessibleName("clientEdit");
+
+        showAll.setText("show all");
+        showAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showAllActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addComponent(showAll)
+                .addGap(32, 32, 32)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(13, 13, 13)
+                        .addComponent(showAll))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel1.getAccessibleContext().setAccessibleName("");
+        jPanel1.getAccessibleContext().setAccessibleDescription("information");
+
+        carAdd.setText("add");
+        carAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                carAddActionPerformed(evt);
+            }
+        });
+
+        carUpdate.setText("update");
+        carUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                carUpdateActionPerformed(evt);
+            }
+        });
+
+        carClear.setText("clear");
+        carClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                carClearActionPerformed(evt);
+            }
+        });
+
+        carDelete.setText("delete");
+        carDelete.setToolTipText("");
+        carDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                carDeleteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -629,36 +762,63 @@ public class clientsDashboard extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 521, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(7, 7, 7)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(signoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(customerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(inventoryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jobsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(backButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(43, 43, 43)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(carAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(carUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(carClear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(carDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1047, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(jobsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(13, 13, 13)
+                .addComponent(inventoryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(63, 63, 63)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(76, Short.MAX_VALUE))
+                .addComponent(customerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(signoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 518, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(carAdd)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(carUpdate)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(carClear)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(carDelete)
+                        .addGap(139, 139, 139))))
         );
-
-        jPanel1.getAccessibleContext().setAccessibleName("");
-        jPanel1.getAccessibleContext().setAccessibleDescription("information");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -678,7 +838,7 @@ public class clientsDashboard extends javax.swing.JFrame {
     private void clientAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientAddActionPerformed
         // TODO add your handling code here:
         
-        String sql="INSERT INTO client (firstName,lastName,middlename,email,address1,address2,city,state,zip,country,clientType,clientId,phone) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql="INSERT INTO client (firstName,lastName,middlename,email,address1,address2,city,state,zip,country,clientType,phone) values(?,?,?,?,?,?,?,?,?,?,?,?)";
     try{
     pst =conn.prepareStatement(sql);
 
@@ -693,33 +853,28 @@ public class clientsDashboard extends javax.swing.JFrame {
     pst.setString(9, zip.getText());
     pst.setString(10, country.getText());
     pst.setString(11, clientType.getText());
-    pst.setString(12, clientId.getText());
-    pst.setString(13, phone.getText());
+    pst.setString(12, phone.getText());
     
     
    // rs=pst.executeQuery()txt_dob;
     pst.execute();
     
     JOptionPane.showMessageDialog(null, "Saved");
-    
+    fetch();
             
     }catch(Exception e)
     {
-           JOptionPane.showMessageDialog(null, e);
+           JOptionPane.showMessageDialog(null, e.getMessage());
     }finally {
 try{
-  rs.close();
       pst.close();
-    // conn.close();
   }
   catch(Exception e) {
                    }
       } 
-        
-        
     }//GEN-LAST:event_clientAddActionPerformed
 
-    private void clientEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientEditActionPerformed
+    private void clientUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientUpdateActionPerformed
     try{
         String value1=firstName.getText();
         String value2=lastName.getText();
@@ -733,30 +888,25 @@ try{
         String value10=country.getText();
         String value11=clientType.getText();
         String value12=clientId.getText();
-        
+        String value13=phone.getText();
 
 
-String sql="update client set clientId='"+value12+"', firstName='"+value1+"', lastName='"+value2+"', middleName='"+value3+"',email='"+value4+"',address1='"+value5+"', address2='"+value6+"',city='"+value7+"',state='"+value8+"', zip='"+value9+"',country='"+value10+"',clientType='"+value11+"' where clientId='"+value1+"'"; 
-pst =conn.prepareStatement(sql);
+    String sql="update client set firstName='"+value1+"', lastName='"+value2
+        +"', middleName='"+value3+"',email='"+value4+"',address1='"+value5
+        +"', address2='"+value6+"',city='"+value7+"',state='"+value8
+        +"', zip='"+value9+"',phone='"+value13+"',country='"+value10+"',clientType='"
+        +value11+"' where clientId='"+value12+"'"; 
+    pst =conn.prepareStatement(sql);
     pst.execute();
     JOptionPane.showMessageDialog(null, "Updated");
     //QueryJFrame s = new QueryJFrame();
     //s.setVisible(true);
-             
+    fetch();
     }catch(Exception e)
     {
            JOptionPane.showMessageDialog(null, e);
-    }finally {
-try{
-  rs.close();
-      pst.close();
-    // conn.close();
-  }
-  catch(Exception e) {
-                   }
-      } 
-    
-    }//GEN-LAST:event_clientEditActionPerformed
+    }
+    }//GEN-LAST:event_clientUpdateActionPerformed
 
     private void address2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_address2ActionPerformed
         // TODO add your handling code here:
@@ -788,16 +938,54 @@ try{
 
     private void clientSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientSearchActionPerformed
 
+        String q ="select * from client "
+                + "where client.firstName = '" +client_search.getText()+"'";
+        try {
+            pst = conn.prepareStatement(q);
+            rs =pst.executeQuery();
+            clientTable.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (SQLException ex) {
+            Logger.getLogger(clientsDashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }          
     }//GEN-LAST:event_clientSearchActionPerformed
 
     private void clientClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientClearActionPerformed
         // TODO add your handling code here:
+        clientId.setText("");
+        firstName.setText("");
+        lastName.setText("");
+        middleName.setText("");
+        email.setText("");
+        address1.setText("");
+        address2.setText("");
+        city.setText("");
+        state.setText("");
+        zip.setText("");
+        country.setText("");
+        clientType.setText("");
+        phone.setText("");
     }//GEN-LAST:event_clientClearActionPerformed
 
     private void clientDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientDeleteActionPerformed
         // TODO add your handling code here:
+      try{
+        String sql="Delete from client where clientId='"+clientId.getText()+"'"; 
+        pst =conn.prepareStatement(sql);
+        pst.execute();
+        JOptionPane.showMessageDialog(null, "Deleted");
+        //QueryJFrame s = new QueryJFrame();
+        //s.setVisible(true);
+        fetch();
+        clientClearActionPerformed(evt); 
+        }catch(Exception e){JOptionPane.showMessageDialog(null, e);
+        }finally {
+        try{
+            pst.close(); 
+        }
+        catch(Exception e){JOptionPane.showMessageDialog(null, e);}
+      }     
     }//GEN-LAST:event_clientDeleteActionPerformed
-
+    
     private void address1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_address1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_address1ActionPerformed
@@ -807,110 +995,186 @@ try{
     }//GEN-LAST:event_middleNameActionPerformed
 
     private void clientTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clientTableMouseClicked
+      
         int row =clientTable.getSelectedRow();
-      clientId.setText(clientTable.getModel().getValueAt(row, 0).toString());
-       firstName.setText(clientTable.getModel().getValueAt(row, 1).toString());
-       lastName.setText(clientTable.getModel().getValueAt(row, 2).toString());
-       middleName.setText(clientTable.getModel().getValueAt(row, 9).toString());
-        email.setText(clientTable.getModel().getValueAt(row, 6).toString());
-       address1.setText(clientTable.getModel().getValueAt(row, 7).toString());
-       address2.setText(clientTable.getModel().getValueAt(row, 5).toString());
-       city.setText(clientTable.getModel().getValueAt(row, 8).toString());
-       state.setText(clientTable.getModel().getValueAt(row, 3).toString());
-        zip.setText(clientTable.getModel().getValueAt(row, 4).toString());
-        country.setText(clientTable.getModel().getValueAt(row, 4).toString());
-        clientType.setText(clientTable.getModel().getValueAt(row, 4).toString());
+        clientId.setText(clientTable.getModel().getValueAt(row, 0).toString());
+        firstName.setText(clientTable.getModel().getValueAt(row, 1).toString());
+        lastName.setText(clientTable.getModel().getValueAt(row, 2).toString());
+        middleName.setText(clientTable.getModel().getValueAt(row, 3).toString());
+        email.setText(clientTable.getModel().getValueAt(row, 4).toString());
+        address1.setText(clientTable.getModel().getValueAt(row, 5).toString());
+        address2.setText(clientTable.getModel().getValueAt(row, 6).toString());
+        city.setText(clientTable.getModel().getValueAt(row, 7).toString());
+        state.setText(clientTable.getModel().getValueAt(row, 8).toString());
+        zip.setText(clientTable.getModel().getValueAt(row, 9).toString());
+        country.setText(clientTable.getModel().getValueAt(row,10).toString());
+        clientType.setText(clientTable.getModel().getValueAt(row, 11).toString());
+        phone.setText(clientTable.getModel().getValueAt(row, 12).toString());
+        
+        //display cars registered with the selected customer 
+        displayCarTable();
+  
         
     }//GEN-LAST:event_clientTableMouseClicked
+
+    private void carTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_carTableMouseClicked
+        // TODO add your handling code here:
+        int row =carTable.getSelectedRow();
+        
+        car_id.setText(carTable.getModel().getValueAt(row, 0).toString());
+        car_year.setText(carTable.getModel().getValueAt(row, 1).toString());
+        car_color.setText(carTable.getModel().getValueAt(row, 2).toString());
+        car_brand.setText(carTable.getModel().getValueAt(row, 3).toString());
+        car_model.setText(carTable.getModel().getValueAt(row, 4).toString());
+        car_plate.setText(carTable.getModel().getValueAt(row, 5).toString());
+        car_vin.setText(carTable.getModel().getValueAt(row, 6).toString());
+    }//GEN-LAST:event_carTableMouseClicked
+
+    private void carAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carAddActionPerformed
+        // TODO add your handling code here:
+            // TODO add your handling code here:
+        
+        String sql="INSERT INTO car (client_id,year,color,brand,model,plate,vin) values(?,?,?,?,?,?,?)";
+    try{
+    pst =conn.prepareStatement(sql);
+
+    pst.setString(1, clientId.getText());
+    pst.setString(2, car_year.getText());
+    pst.setString(3, car_color.getText());
+    pst.setString(4, car_brand.getText());
+    pst.setString(5, car_model.getText());
+    pst.setString(6, car_plate.getText());
+    pst.setString(7, car_vin.getText());
+      
+    pst.execute();
+  
+    JOptionPane.showMessageDialog(null, "Saved");
+    //after adding, display list of cars
+    displayCarTable();
+    
+    //set clear
+    carClearActionPerformed(evt);
+    
+    }catch(Exception e)
+    {
+           JOptionPane.showMessageDialog(null, e.getMessage());
+    }finally {
+try{
+      pst.close();
+  }
+  catch(Exception e) {
+                   }
+      } 
+      
+    }//GEN-LAST:event_carAddActionPerformed
+
+    private void carUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carUpdateActionPerformed
+        // TODO add your handling code here:
+        
+         try{
+        String value1=car_year.getText();
+        String value2=car_color.getText();
+        String value3=car_brand.getText();
+        String value4=car_model.getText();
+        String value5=car_plate.getText();
+        String value6=car_vin.getText();
+        String value7=clientId.getText();
+
+        String sql="update car set year='"+value1+"', color='"+value2+"', "
+                + "brand='"+value3+"',model='"+value4+"',plate='"+value5
+                +"', vin='"+value6+"',client_id='"+value7+"'"
+                +"where car_id="+ car_id.getText()+  " and client_id="+clientId.getText(); 
+    
+    pst =conn.prepareStatement(sql);
+    pst.execute();
+    
+    JOptionPane.showMessageDialog(null, "Updated");
+    displayCarTable();
+    //QueryJFrame s = new QueryJFrame();
+    //s.setVisible(true);
+             
+    }catch(Exception e)
+    {
+           JOptionPane.showMessageDialog(null, e);
+    }finally {
+try{
+  rs.close();
+      pst.close();
+    // conn.close();
+  }
+  catch(Exception e) {
+                   }
+      } 
+    
+  
+    }//GEN-LAST:event_carUpdateActionPerformed
+
+    private void carClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carClearActionPerformed
+        // TODO add your handling code here:
+        car_id.setText("");
+        car_year.setText("");
+        car_color.setText("");
+        car_brand.setText("");
+        car_model.setText("");
+        car_plate.setText("");
+        car_vin.setText("");
+    }//GEN-LAST:event_carClearActionPerformed
+
+    private void carDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carDeleteActionPerformed
+        // TODO add your handling code here:
+        try{
+            String sql="Delete from car where car_id='"+car_id.getText()+"'"; 
+            pst =conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "Deleted");
+        //QueryJFrame s = new QueryJFrame();
+        //s.setVisible(true);
+            
+        displayCarTable();
+        carClearActionPerformed(evt); 
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        } 
+      
+    }//GEN-LAST:event_carDeleteActionPerformed
+
+    private void car_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_car_idActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_car_idActionPerformed
+
+    private void jobsButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jobsButtonMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jobsButtonMouseClicked
+
+    private void jobsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jobsButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jobsButtonActionPerformed
+
+    private void inventoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inventoryButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inventoryButtonActionPerformed
+
+    private void customerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_customerButtonActionPerformed
+
+    private void car_vinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_car_vinActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_car_vinActionPerformed
+
+    private void client_searchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_client_searchMouseClicked
+        // TODO add your handling code here:
+        client_search.setText("");
+    }//GEN-LAST:event_client_searchMouseClicked
 
     private void clientIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientIdActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_clientIdActionPerformed
 
-    private void search1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search1ActionPerformed
+    private void showAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showAllActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_search1ActionPerformed
-
-    private void search1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_search1KeyReleased
-        
-         try{
-                String sql="select * from client where clientId=? ";
-        pst =conn.prepareStatement(sql);
-        pst.setString(1,search1.getText());
-  
-
-    rs=pst.executeQuery();
-   // pst.execute();
-   if(rs.next()){
-    String add1=rs.getString("clientId");
-    clientId.setText(add1);
-    String add2=rs.getString("firstName");
-   firstName.setText(add2);
-   String add3=rs.getString("lastName");
-     lastName.setText(add3);
-    String add4=rs.getString("middleName");
-   middleName.setText(add4);
-    String add5=rs.getString("email");
-    email.setText(add5);
-    String add6=rs.getString("address1");
-   address1.setText(add6);
-   String add7=rs.getString("address2");
-    address2.setText(add7);
-    String add8=rs.getString("city");
-    city.setText(add8);
-    
-    String add9=rs.getString("state");
-    state.setText(add9);
-    String add10=rs.getString("zip");
-   zip.setText(add10);
-   
-    String add11=rs.getString("country");
-   country.setText(add11);
-   
-    String add12=rs.getString("clientType");
-   clientType.setText(add12);
-   
-    }        
-    }
-           catch(Exception e)
-    {
-           JOptionPane.showMessageDialog(null, e);
-
-    }finally {
-try{
-  rs.close();
-      pst.close();
-     //conn.close();
-  }
-  catch(Exception e) {
-                   }
-      }               
-                              
-    }//GEN-LAST:event_search1KeyReleased
-
-    private void carTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_carTableMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_carTableMouseClicked
-
-    private void clientAdd1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientAdd1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_clientAdd1ActionPerformed
-
-    private void clientEdit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientEdit1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_clientEdit1ActionPerformed
-
-    private void clientClear1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientClear1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_clientClear1ActionPerformed
-
-    private void clientDelete1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientDelete1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_clientDelete1ActionPerformed
-
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+        fetch();
+    }//GEN-LAST:event_showAllActionPerformed
 
     /**
      * @param args the command line arguments
@@ -952,19 +1216,34 @@ try{
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField address1;
     private javax.swing.JTextField address2;
+    private javax.swing.JButton backButton;
+    private javax.swing.JButton carAdd;
+    private javax.swing.JButton carClear;
+    private javax.swing.JButton carDelete;
+    private javax.swing.JPanel carEditPanel;
     private javax.swing.JTable carTable;
+    private javax.swing.JButton carUpdate;
+    private javax.swing.JTextField car_brand;
+    private javax.swing.JTextField car_color;
+    private javax.swing.JTextField car_id;
+    private javax.swing.JTextField car_model;
+    private javax.swing.JTextField car_plate;
+    private javax.swing.JTextField car_vin;
+    private javax.swing.JTextField car_year;
     private javax.swing.JTextField city;
     private javax.swing.JButton clientAdd;
-    private javax.swing.JButton clientAdd1;
-    private javax.swing.JButton clientClear1;
-    private javax.swing.JButton clientDelete1;
-    private javax.swing.JButton clientEdit1;
+    private javax.swing.JButton clientClear;
     private javax.swing.JTextField clientId;
+    private javax.swing.JButton clientSearch;
     private javax.swing.JTable clientTable;
     private javax.swing.JTextField clientType;
+    private javax.swing.JButton clientUpdate;
+    private javax.swing.JTextField client_search;
     private javax.swing.JTextField country;
+    private javax.swing.JButton customerButton;
     private javax.swing.JTextField email;
     private javax.swing.JTextField firstName;
+    private javax.swing.JButton inventoryButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -989,20 +1268,17 @@ try{
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
+    private javax.swing.JButton jobsButton;
     private javax.swing.JTextField lastName;
     private javax.swing.JTextField middleName;
     private javax.swing.JTextField phone;
+    private javax.swing.JButton showAll;
+    private javax.swing.JButton signoutButton;
     private javax.swing.JTextField state;
     private javax.swing.JTextField zip;
     // End of variables declaration//GEN-END:variables

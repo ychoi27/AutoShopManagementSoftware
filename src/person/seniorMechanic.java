@@ -9,6 +9,10 @@ package person;
  *
  * @author ck437
  */
-public class seniorMechanic {
+public class seniorMechanic extends mechanic implements person {
     
+    public void getFirstName(){
+        
+        
+    }
 }
