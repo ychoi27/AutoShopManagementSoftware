@@ -1,6 +1,5 @@
-package util;
+package connector;
 
-import connector.SqliteConnection;
 import java.sql.*;
 import util.ConfigManager;
 
@@ -16,9 +15,33 @@ public class JobDatabaseConnector {
         conn = mainConn.connect(config.getProp("dbpath"));
 	}
 	
-	public int createJob(String jobStatus, double handicap, double priority, boolean partsAvailable, int jobLength, int jobID, boolean walkIn, int clientID, int carID ){
+	public int createJob(String jobStatus, double handicap, double priority, boolean partsAvailable, int jobLength, int jobID, boolean walkIn, int clientID, int carID, int mechanicID, Date jobStartDateHour, Date jobEndDateHour){
 		try{
-			String q = "INSERT INTO jobs (jobStatus, handicap, priority, partsAvailable, jobLength, jobID, walkIn, clientID, carID) VALUES (?,?,?,?,?,?,?,?,?);";
+			String q = "INSERT INTO jobs (jobStatus, handicap, priority, partsAvailable, jobLength, jobID, walkIn, clientID, carID, mechanicID, jobStartDateHour, jobEndDateHour) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);";
+			pst= conn.prepareStatement(q);
+			pst.setString(1, jobStatus);
+			pst.setDouble(2, handicap);
+			pst.setDouble(3, priority);
+			pst.setBoolean(4, partsAvailable);
+			pst.setInt(5, jobLength);
+			pst.setInt(6, jobID);
+			pst.setBoolean(7, walkIn);
+			pst.setInt(8, clientID);
+			pst.setInt(9, carID);
+			pst.setInt(10, mechanicID);
+			pst.setDate(11, jobStartDateHour);
+			pst.setDate(12, jobEndDateHour);
+			int result= pst.executeUpdate();
+			return result;
+		}catch(Exception e){
+			return -1000;
+			//deal with exception
+		}
+		
+	}
+	public int createJob(String jobStatus, double handicap, double priority, boolean partsAvailable, int jobLength, int jobID, boolean walkIn, int clientID, int carID){
+		try{
+			String q = "INSERT INTO jobs (jobStatus, handicap, priority, partsAvailable, jobLength, jobID, walkIn, clientID, carID, mechanicID, jobStartDateHour, jobEndDateHour) VALUES (?,?,?,?,?,?,?,?,?);";
 			pst= conn.prepareStatement(q);
 			pst.setString(1, jobStatus);
 			pst.setDouble(2, handicap);
