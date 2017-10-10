@@ -218,6 +218,11 @@ public class clientsDashboard extends javax.swing.JFrame {
         });
 
         signoutButton.setText("SIGN OUT");
+        signoutButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                signoutButtonActionPerformed(evt);
+            }
+        });
 
         backButton.setText("BACK");
 
@@ -329,7 +334,7 @@ public class clientsDashboard extends javax.swing.JFrame {
             .addGroup(carEditPanelLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addGroup(carEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(car_id, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                    .addComponent(car_id, javax.swing.GroupLayout.PREFERRED_SIZE, 34, Short.MAX_VALUE)
                     .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(carEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -354,7 +359,7 @@ public class clientsDashboard extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(carEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(car_vin, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
+                    .addComponent(car_vin, javax.swing.GroupLayout.PREFERRED_SIZE, 34, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1148,14 +1153,26 @@ try{
 
     private void jobsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jobsButtonActionPerformed
         // TODO add your handling code here:
+        
+        jobsDashboard jobsDash = new jobsDashboard();
+        jobsDash.setVisible(true);
+        dispose();
     }//GEN-LAST:event_jobsButtonActionPerformed
 
     private void inventoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inventoryButtonActionPerformed
         // TODO add your handling code here:
+        partsDashboard partsDash = new partsDashboard();
+        partsDash.setVisible(true);
+        dispose();
+
     }//GEN-LAST:event_inventoryButtonActionPerformed
 
     private void customerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerButtonActionPerformed
         // TODO add your handling code here:
+        clientsDashboard clientsDash = new clientsDashboard();
+        clientsDash.setVisible(true);
+        dispose();
+
     }//GEN-LAST:event_customerButtonActionPerformed
 
     private void car_vinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_car_vinActionPerformed
@@ -1175,6 +1192,13 @@ try{
         // TODO add your handling code here:
         fetch();
     }//GEN-LAST:event_showAllActionPerformed
+
+    private void signoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signoutButtonActionPerformed
+        // TODO add your handling code here:
+        loginDashboard loginDash = new loginDashboard();
+        loginDash.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_signoutButtonActionPerformed
 
     /**
      * @param args the command line arguments
