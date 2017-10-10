@@ -95,30 +95,48 @@ public class JobDatabaseConnector {
 	
 	public ResultSet findJob(String attr, String value){
 		//search by status
-		switch(attr.toLowerCase()){
-		case "status":
-			//Do SQL search for status value and set rs to result set;
-			return rs;
-		default:
-			rs= null;
-			return rs;
+		try{
+			String q = "SELECT * FROM jobs WHERE " + attr + "=?";
+			pst = conn.prepareStatement(q);
+			switch(attr.toLowerCase()){
+			case "jobstatus":
+				//Do SQL search for status value and set rs to result set;
+				pst.setString(1, value);
+				rs = pst.executeQuery();
+				return rs;
+			default:
+				rs= null;
+				return rs;
 			
-		}	
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			rs = null;
+			return rs;
+		}
 	}
 	
-	public ResultSet findJob(String attr, double value){
-		//search handicap or priority
-		switch(attr.toLowerCase()){
-		case "handicap":
-			//Do SQL search for handicap value and set rs to result set;
-			return rs;
-		case "priority":
-			//DO SQL search for priority value and set rs to result set;
-			return rs;
-		default:
-			rs= null;
-			return rs;
+	public ResultSet findJob(String attr, String comparator, double value){
+		//search handicap or priority. Must choose a comparator, eg "=", "<", etc.
+		try{
+			String q = "SELECT * FROM jobs WHERE " + attr + comparator +"?";
+			pst= conn.prepareStatement(q);
+			switch(attr.toLowerCase()){
+			case "handicap":
+			case "priority":
+				//DO SQL search for priority or handicap value and set rs to result set;
+				pst.setDouble(1, value);
+				rs = pst.executeQuery();
+				return rs;
+			default:
+				rs= null;
+				return rs;
+			}
 			
+		}catch(Exception e){
+			e.printStackTrace();
+			rs = null;
+			return rs;
 		}
 	}
 	
