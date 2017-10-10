@@ -239,23 +239,35 @@ public class JobDatabaseConnector {
 		try{
 			String q = "SELECT * FROM jobs WHERE " + attr + "=?";
 			pst = conn.prepareStatement(q);
-		switch(attr.toLowerCase()){
-		case "jobstartdatehour":
-		case "jobenddatehour":
-			//Do SQL search for jobStartDateHour or jobEndDateHour value and set rs to result set
-			pst.setDate(1, value);
-			rs = pst.executeQuery();
-			return rs;
-		default:
-			rs= null;
-			return rs;
+			switch(attr.toLowerCase()){
+			case "jobstartdatehour":
+			case "jobenddatehour":
+				//Do SQL search for jobStartDateHour or jobEndDateHour value and set rs to result set
+				pst.setDate(1, value);
+				rs = pst.executeQuery();
+				return rs;
+			default:
+				rs= null;
+				return rs;
 			
-		}
+			}
 		}catch(Exception e){
 			e.printStackTrace();
 			rs= null;
 			return rs;
 		}
+	}
+	public int getMaxJobID(){
+		int max = -1000;
+		try{
+			String q = "SELECT MAX(jobID) AS maxID FROM jobs";
+			pst = conn.prepareStatement(q);
+			rs = pst.executeQuery();
+			return rs.getInt("maxID");
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return max;	
 	}
 
 }
