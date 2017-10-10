@@ -1,5 +1,26 @@
+/////////////////////////////////////////////////////////////////////////////
+//This class provides an interface for the software to interact with the
+//jobs database. Methods include: createJob, updateJob, deleteJob and 
+//findJob.
+//
+//createJob(jobStatus, handicap, priority, partsAvailable, jobLength, jobID, 
+//walkIn, clientID, carID)
+//
+//updateJob(jobID, attributeName, newValue)
+//
+//deleteJob(jobID)
+//
+//for String and boolean attributes (jobStatus, partsAvailable, walkIn): 
+//findJob(attribute, value)
+//
+//for int and double boolean attributes (priority, handicap, jobLength, jobID,
+//clientID, carID):
+//findJob(attribute, comparator, value)
+//////////////////////////////////////////////////////////////////////////////
+
 package connector;
 
+import connector.SqliteConnection;
 import java.sql.*;
 import util.ConfigManager;
 
@@ -14,7 +35,6 @@ public class JobDatabaseConnector {
         SqliteConnection mainConn = new SqliteConnection();
         conn = mainConn.connect(config.getProp("dbpath"));
 	}
-	
 	public int createJob(String jobStatus, double handicap, double priority, boolean partsAvailable, int jobLength, int jobID, boolean walkIn, int clientID, int carID, int mechanicID, Date jobStartDateHour, Date jobEndDateHour){
 		try{
 			String q = "INSERT INTO jobs (jobStatus, handicap, priority, partsAvailable, jobLength, jobID, walkIn, clientID, carID, mechanicID, jobStartDateHour, jobEndDateHour) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);";
@@ -37,11 +57,10 @@ public class JobDatabaseConnector {
 			return -1000;
 			//deal with exception
 		}
-		
 	}
-	public int createJob(String jobStatus, double handicap, double priority, boolean partsAvailable, int jobLength, int jobID, boolean walkIn, int clientID, int carID){
+	public int createJob(String jobStatus, double handicap, double priority, boolean partsAvailable, int jobLength, int jobID, boolean walkIn, int clientID, int carID ){
 		try{
-			String q = "INSERT INTO jobs (jobStatus, handicap, priority, partsAvailable, jobLength, jobID, walkIn, clientID, carID, mechanicID, jobStartDateHour, jobEndDateHour) VALUES (?,?,?,?,?,?,?,?,?);";
+			String q = "INSERT INTO jobs (jobStatus, handicap, priority, partsAvailable, jobLength, jobID, walkIn, clientID, carID) VALUES (?,?,?,?,?,?,?,?,?);";
 			pst= conn.prepareStatement(q);
 			pst.setString(1, jobStatus);
 			pst.setDouble(2, handicap);
@@ -141,6 +160,7 @@ public class JobDatabaseConnector {
 	
 	public ResultSet findJob(String attr, String comparator, double value){
 		//search handicap or priority. Must choose a comparator, eg "=", "<", etc.
+		//IMPORTANT: double parameter must CLEARLY be a double (eg. 2.0, (double)2) or invalid results.
 		try{
 			String q = "SELECT * FROM jobs WHERE " + attr + comparator +"?";
 			pst= conn.prepareStatement(q);
@@ -166,11 +186,14 @@ public class JobDatabaseConnector {
 	public ResultSet findJob(String attr, boolean value){
 		//search by partsAvailable or walkIn
 		try{
+			String q = "SELECT * FROM jobs WHERE " + attr + "=?";
+			pst = conn.prepareStatement(q);
 			switch(attr.toLowerCase()){
 			case "partsavailable":
 			case "walkin":
 				//DO SQL search for walkIn or partsAvailable value and set rs to result set;
-				String q = "SELECT * FROM jobs WHERE " + attr + "=?";
+				pst.setBoolean(1, value);
+				rs = pst.executeQuery();
 				return rs;
 			default:
 				rs= null;
@@ -185,25 +208,29 @@ public class JobDatabaseConnector {
 		
 	}
 	
-	public ResultSet findJob(String attr, int value){
-		//search by jobLength, jobID, clientID or carID
+	public ResultSet findJob(String attr, String comparator, int value){
+		//search by jobLength, jobID, clientID or carID. 
+		try{
+			String q = "SELECT * FROM jobs WHERE " + attr + comparator + "?";
+			pst = conn.prepareStatement(q);
 		switch(attr.toLowerCase()){
 		case "joblength":
-			//Do SQL search for jobLength value and set rs to result set;
-			return rs;
 		case "jobid":
-			//Do SQL search for jobID value and set rs to result set;
-			return rs;
 		case "clientid":
-			//Do SQL search for clientID value and set rs to result set;
-			return rs;
 		case "carid":
-			//Do SQL search for carID value and set rs to result set
+			//Do SQL search for jobLength, jobID, clientID or carID value and set rs to result set
+			pst.setInt(1, value);
+			rs = pst.executeQuery();
 			return rs;
 		default:
 			rs= null;
 			return rs;
 			
+		}
+		}catch(Exception e){
+			e.printStackTrace();
+			rs= null;
+			return rs;
 		}
 	}
 
