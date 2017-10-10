@@ -83,6 +83,11 @@ public class jobsDashboard extends javax.swing.JFrame {
         });
 
         signoutButton.setText("SIGN OUT");
+        signoutButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                signoutButtonActionPerformed(evt);
+            }
+        });
 
         backButton.setText("BACK");
 
@@ -226,19 +231,35 @@ public class jobsDashboard extends javax.swing.JFrame {
 
     private void customerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerButtonActionPerformed
         // TODO add your handling code here:
+        clientsDashboard clientsDash = new clientsDashboard();
+        clientsDash.setVisible(true);
+        dispose();
     }//GEN-LAST:event_customerButtonActionPerformed
 
     private void jobsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jobsButtonActionPerformed
         // TODO add your handling code here:
+        jobsDashboard jobsDash = new jobsDashboard();
+        jobsDash.setVisible(true);
+        dispose();
     }//GEN-LAST:event_jobsButtonActionPerformed
 
     private void inventoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inventoryButtonActionPerformed
         // TODO add your handling code here:
+        partsDashboard partsDash = new partsDashboard();
+        partsDash.setVisible(true);
+        dispose();
     }//GEN-LAST:event_inventoryButtonActionPerformed
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_searchButtonActionPerformed
+
+    private void signoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signoutButtonActionPerformed
+        // TODO add your handling code here:
+        loginDashboard loginDash = new loginDashboard();
+        loginDash.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_signoutButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -248,7 +269,9 @@ public class jobsDashboard extends javax.swing.JFrame {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+         *//*
+                 
+             
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
