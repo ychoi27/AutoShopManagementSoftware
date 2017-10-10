@@ -142,17 +142,22 @@ public class JobDatabaseConnector {
 	
 	public ResultSet findJob(String attr, boolean value){
 		//search by partsAvailable or walkIn
-		switch(attr.toLowerCase()){
-		case "partsavailable":
-			//Do SQL search for partsAvailable value and set rs to result set;
-			return rs;
-		case "walkin":
-			//DO SQL search for walkIn value and set rs to result set;
-			return rs;
-		default:
-			rs= null;
-			return rs;
+		try{
+			switch(attr.toLowerCase()){
+			case "partsavailable":
+			case "walkin":
+				//DO SQL search for walkIn or partsAvailable value and set rs to result set;
+				String q = "SELECT * FROM jobs WHERE " + attr + "=?";
+				return rs;
+			default:
+				rs= null;
+				return rs;
 			
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			rs = null;
+			return rs;
 		}
 		
 	}

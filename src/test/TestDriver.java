@@ -6,6 +6,7 @@ import java.sql.*;
 public class TestDriver {
 	public static void main(String[] args){
 		JobDatabaseConnector jdc = new JobDatabaseConnector();
+
 		ResultSet result = jdc.findJob("priority","<", 2);
 		try{
 		    ResultSetMetaData rsmd = result.getMetaData();
@@ -20,6 +21,7 @@ public class TestDriver {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+
 	}
 
 }
