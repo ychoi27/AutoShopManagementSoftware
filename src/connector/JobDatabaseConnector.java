@@ -218,8 +218,32 @@ public class JobDatabaseConnector {
 		case "jobid":
 		case "clientid":
 		case "carid":
-			//Do SQL search for jobLength, jobID, clientID or carID value and set rs to result set
+		case "mechanicid":
+			//Do SQL search for jobLength, jobID, clientID, carID, or mechanicID value and set rs to result set
 			pst.setInt(1, value);
+			rs = pst.executeQuery();
+			return rs;
+		default:
+			rs= null;
+			return rs;
+			
+		}
+		}catch(Exception e){
+			e.printStackTrace();
+			rs= null;
+			return rs;
+		}
+	}
+	public ResultSet findJob(String attr, Date value){
+		//search by jobLength, jobID, clientID or carID. 
+		try{
+			String q = "SELECT * FROM jobs WHERE " + attr + "=?";
+			pst = conn.prepareStatement(q);
+		switch(attr.toLowerCase()){
+		case "jobstartdatehour":
+		case "jobenddatehour":
+			//Do SQL search for jobStartDateHour or jobEndDateHour value and set rs to result set
+			pst.setDate(1, value);
 			rs = pst.executeQuery();
 			return rs;
 		default:
