@@ -10,8 +10,13 @@ package person;
  * @author ck437
  */
 public class clients implements person {
+
+    @Override
+    public void getFirstName() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
     
-    public void getFirstName()
+   
 }
