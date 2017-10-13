@@ -19,6 +19,8 @@ import org.swiftgantt.ui.TimeUnit;
  * @author Yuxing Wang
  * 
  */
+
+//news changes from here
 public final class GanttChartDemoComponent extends GanttChart {
 
 	private static final long serialVersionUID = 1L;
