@@ -1,8 +1,4 @@
-/*
- * Demo of the SwiftGantt
- * TODO
- * Created on 2008-12-28, 12:35:56
- */
+
 package src.swiftgantt.demo;
 
 import org.swiftgantt.Config;
