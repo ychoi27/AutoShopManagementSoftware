@@ -3,10 +3,10 @@
  * TODO
  * Created on 2008-12-28, 12:35:56
  */
-package org.swiftgantt.demo;
+package src.swiftgantt.demo;
 
 import org.swiftgantt.Config;
-import org.swiftgantt.demo.tab.ScheduleTab;
+
 import org.swiftgantt.model.Task;
 import org.swiftgantt.model.TaskTreeModel;
 import org.swiftgantt.ui.TimeUnit;
