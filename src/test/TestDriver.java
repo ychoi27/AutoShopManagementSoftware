@@ -1,5 +1,6 @@
 package test;
 
+import connector.JobDatabaseConnector;
 import util.*;
 import java.sql.*;
 

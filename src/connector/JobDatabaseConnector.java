@@ -18,10 +18,11 @@
 //findJob(attribute, comparator, value)
 //////////////////////////////////////////////////////////////////////////////
 
-package util;
+package connector;
 
 import connector.SqliteConnection;
 import java.sql.*;
+import util.ConfigManager;
 import util.ConfigManager;
 
 public class JobDatabaseConnector {
