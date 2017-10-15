@@ -6,6 +6,9 @@
 //createJob(jobStatus, handicap, priority, partsAvailable, jobLength, jobID, 
 //walkIn, clientID, carID)
 //
+//createJob(jobStatus, handicap, priority, partsAvailable, jobLength, jobID, 
+//walkIn, clientID, carID, mechanicID, jobStartDateHour, jobEndDateHour)
+//
 //updateJob(jobID, attributeName, newValue)
 //
 //deleteJob(jobID)
@@ -23,7 +26,6 @@ package connector;
 import connector.SqliteConnection;
 import java.sql.*;
 import util.ConfigManager;
-import util.ConfigManager;
 
 public class JobDatabaseConnector {
 	private Connection conn;
@@ -36,20 +38,44 @@ public class JobDatabaseConnector {
         SqliteConnection mainConn = new SqliteConnection();
         conn = mainConn.connect(config.getProp("dbpath"));
 	}
-	
-	public int createJob(String jobStatus, double handicap, double priority, boolean partsAvailable, int jobLength, int jobID, boolean walkIn, int clientID, int carID ){
+	public int createJob(String jobStatus, String jobType, double handicap, double priority, boolean partsAvailable, int jobLength, int jobID, boolean walkIn, int clientID, int carID, int mechanicID, Date jobStartDateHour, Date jobEndDateHour){
 		try{
-			String q = "INSERT INTO jobs (jobStatus, handicap, priority, partsAvailable, jobLength, jobID, walkIn, clientID, carID) VALUES (?,?,?,?,?,?,?,?,?);";
+			String q = "INSERT INTO jobs (jobStatus, jobType, handicap, priority, partsAvailable, jobLength, jobID, walkIn, clientID, carID, mechanicID, jobStartDateHour, jobEndDateHour) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);";
 			pst= conn.prepareStatement(q);
 			pst.setString(1, jobStatus);
-			pst.setDouble(2, handicap);
-			pst.setDouble(3, priority);
-			pst.setBoolean(4, partsAvailable);
-			pst.setInt(5, jobLength);
-			pst.setInt(6, jobID);
-			pst.setBoolean(7, walkIn);
-			pst.setInt(8, clientID);
-			pst.setInt(9, carID);
+			pst.setString(2, jobType);
+			pst.setDouble(3, handicap);
+			pst.setDouble(4, priority);
+			pst.setBoolean(5, partsAvailable);
+			pst.setInt(6, jobLength);
+			pst.setInt(7, jobID);
+			pst.setBoolean(8, walkIn);
+			pst.setInt(9, clientID);
+			pst.setInt(10, carID);
+			pst.setInt(11, mechanicID);
+			pst.setDate(12, jobStartDateHour);
+			pst.setDate(13, jobEndDateHour);
+			int result= pst.executeUpdate();
+			return result;
+		}catch(Exception e){
+			return -1000;
+			//deal with exception
+		}
+	}
+	public int createJob(String jobStatus, String jobType, double handicap, double priority, boolean partsAvailable, int jobLength, int jobID, boolean walkIn, int clientID, int carID ){
+		try{
+			String q = "INSERT INTO jobs (jobStatus, jobType, handicap, priority, partsAvailable, jobLength, jobID, walkIn, clientID, carID) VALUES (?,?,?,?,?,?,?,?,?,?);";
+			pst= conn.prepareStatement(q);
+			pst.setString(1, jobStatus);
+			pst.setString(2, jobType);
+			pst.setDouble(3, handicap);
+			pst.setDouble(4, priority);
+			pst.setBoolean(5, partsAvailable);
+			pst.setInt(6, jobLength);
+			pst.setInt(7, jobID);
+			pst.setBoolean(8, walkIn);
+			pst.setInt(9, clientID);
+			pst.setInt(10, carID);
 			int result= pst.executeUpdate();
 			return result;
 		}catch(Exception e){
@@ -64,6 +90,7 @@ public class JobDatabaseConnector {
 			String q = "UPDATE jobs SET " + attrName + "=? WHERE jobID=?";
 			pst= conn.prepareStatement(q);
 			switch(attrName.toLowerCase()){
+			case "jobtype":
 			case "jobstatus":
 				String stringVal = newValue.toString();
 				pst.setString(1, stringVal);
@@ -120,6 +147,7 @@ public class JobDatabaseConnector {
 			String q = "SELECT * FROM jobs WHERE " + attr + "=?";
 			pst = conn.prepareStatement(q);
 			switch(attr.toLowerCase()){
+			case "jobtype":
 			case "jobstatus":
 				//Do SQL search for status value and set rs to result set;
 				pst.setString(1, value);
@@ -197,7 +225,8 @@ public class JobDatabaseConnector {
 		case "jobid":
 		case "clientid":
 		case "carid":
-			//Do SQL search for jobLength, jobID, clientID or carID value and set rs to result set
+		case "mechanicid":
+			//Do SQL search for jobLength, jobID, clientID, carID, or mechanicID value and set rs to result set
 			pst.setInt(1, value);
 			rs = pst.executeQuery();
 			return rs;
@@ -211,6 +240,41 @@ public class JobDatabaseConnector {
 			rs= null;
 			return rs;
 		}
+	}
+	public ResultSet findJob(String attr, Date value){
+		//search by jobLength, jobID, clientID or carID. 
+		try{
+			String q = "SELECT * FROM jobs WHERE " + attr + "=?";
+			pst = conn.prepareStatement(q);
+			switch(attr.toLowerCase()){
+			case "jobstartdatehour":
+			case "jobenddatehour":
+				//Do SQL search for jobStartDateHour or jobEndDateHour value and set rs to result set
+				pst.setDate(1, value);
+				rs = pst.executeQuery();
+				return rs;
+			default:
+				rs= null;
+				return rs;
+			
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			rs= null;
+			return rs;
+		}
+	}
+	public int getMaxJobID(){
+		int max = -1000;
+		try{
+			String q = "SELECT MAX(jobID) AS maxID FROM jobs";
+			pst = conn.prepareStatement(q);
+			rs = pst.executeQuery();
+			return rs.getInt("maxID");
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return max;	
 	}
 
 }
