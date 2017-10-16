@@ -38,12 +38,12 @@ public class JobDatabaseConnector {
         SqliteConnection mainConn = new SqliteConnection();
         conn = mainConn.connect(config.getProp("dbpath"));
 	}
-	public int createJob(String jobStatus, String jobType, double handicap, double priority, boolean partsAvailable, int jobLength, int jobID, boolean walkIn, int clientID, int carID, int mechanicID, Date jobStartDateHour, Date jobEndDateHour){
+	public int createJob(String jobStatus, int jobTypeID, double handicap, double priority, boolean partsAvailable, int jobLength, int jobID, boolean walkIn, int clientID, int carID, int mechanicID, Date jobStartDateHour, Date jobEndDateHour){
 		try{
-			String q = "INSERT INTO jobs (jobStatus, jobType, handicap, priority, partsAvailable, jobLength, jobID, walkIn, clientID, carID, mechanicID, jobStartDateHour, jobEndDateHour) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);";
+			String q = "INSERT INTO jobs (jobStatus, jobTypeID, handicap, priority, partsAvailable, jobLength, jobID, walkIn, clientID, carID, mechanicID, jobStartDateHour, jobEndDateHour) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);";
 			pst= conn.prepareStatement(q);
 			pst.setString(1, jobStatus);
-			pst.setString(2, jobType);
+			pst.setInt(2, jobTypeID);
 			pst.setDouble(3, handicap);
 			pst.setDouble(4, priority);
 			pst.setBoolean(5, partsAvailable);
@@ -60,14 +60,29 @@ public class JobDatabaseConnector {
 		}catch(Exception e){
 			return -1000;
 			//deal with exception
-		}
+		}finally {
+	        if(rs != null){
+	             try{
+	                  rs.close();
+	             } catch(Exception e){
+	                 e.printStackTrace();
+	             }
+	        }
+	        if(pst != null){
+	            try{
+	                pst.close();
+	            } catch(Exception e){
+	                e.printStackTrace();
+	            }
+	        }
+	    }
 	}
-	public int createJob(String jobStatus, String jobType, double handicap, double priority, boolean partsAvailable, int jobLength, int jobID, boolean walkIn, int clientID, int carID ){
+	public int createJob(String jobStatus, int jobTypeID, double handicap, double priority, boolean partsAvailable, int jobLength, int jobID, boolean walkIn, int clientID, int carID ){
 		try{
-			String q = "INSERT INTO jobs (jobStatus, jobType, handicap, priority, partsAvailable, jobLength, jobID, walkIn, clientID, carID) VALUES (?,?,?,?,?,?,?,?,?,?);";
+			String q = "INSERT INTO jobs (jobStatus, jobTypeID, handicap, priority, partsAvailable, jobLength, jobID, walkIn, clientID, carID) VALUES (?,?,?,?,?,?,?,?,?,?);";
 			pst= conn.prepareStatement(q);
 			pst.setString(1, jobStatus);
-			pst.setString(2, jobType);
+			pst.setInt(2, jobTypeID);
 			pst.setDouble(3, handicap);
 			pst.setDouble(4, priority);
 			pst.setBoolean(5, partsAvailable);
@@ -81,7 +96,22 @@ public class JobDatabaseConnector {
 		}catch(Exception e){
 			return -1000;
 			//deal with exception
-		}
+		}finally {
+	        if(rs != null){
+	             try{
+	                  rs.close();
+	             } catch(Exception e){
+	                 e.printStackTrace();
+	             }
+	        }
+	        if(pst != null){
+	            try{
+	                pst.close();
+	            } catch(Exception e){
+	                e.printStackTrace();
+	            }
+	        }
+	    }
 		
 	}
 	
@@ -113,7 +143,7 @@ public class JobDatabaseConnector {
 				pst.setInt(1, intVal);
 				break;
 			default:
-				return -1001;
+				return -1000;
 			}
 			pst.setInt(2, jobID);
 			int result = pst.executeUpdate();
@@ -122,7 +152,22 @@ public class JobDatabaseConnector {
 			//deal with exception
 			e.printStackTrace();
 			return -1000;
-		}
+		}finally {
+	        if(rs != null){
+	             try{
+	                  rs.close();
+	             } catch(Exception e){
+	                 e.printStackTrace();
+	             }
+	        }
+	        if(pst != null){
+	            try{
+	                pst.close();
+	            } catch(Exception e){
+	                e.printStackTrace();
+	            }
+	        }
+	    }
 		
 		
 	}
@@ -137,7 +182,22 @@ public class JobDatabaseConnector {
 		}catch(Exception e){
 			return -1000;
 			//deal with exception
-		}
+		}finally {
+	        if(rs != null){
+	             try{
+	                  rs.close();
+	             } catch(Exception e){
+	                 e.printStackTrace();
+	             }
+	        }
+	        if(pst != null){
+	            try{
+	                pst.close();
+	            } catch(Exception e){
+	                e.printStackTrace();
+	            }
+	        }
+	    }
 		
 	}
 	
@@ -162,7 +222,22 @@ public class JobDatabaseConnector {
 			e.printStackTrace();
 			rs = null;
 			return rs;
-		}
+		}finally {
+	        if(rs != null){
+	             try{
+	                  rs.close();
+	             } catch(Exception e){
+	                 e.printStackTrace();
+	             }
+	        }
+	        if(pst != null){
+	            try{
+	                pst.close();
+	            } catch(Exception e){
+	                e.printStackTrace();
+	            }
+	        }
+	    }
 	}
 	
 	public ResultSet findJob(String attr, String comparator, double value){
@@ -187,7 +262,22 @@ public class JobDatabaseConnector {
 			e.printStackTrace();
 			rs = null;
 			return rs;
-		}
+		}finally {
+	        if(rs != null){
+	             try{
+	                  rs.close();
+	             } catch(Exception e){
+	                 e.printStackTrace();
+	             }
+	        }
+	        if(pst != null){
+	            try{
+	                pst.close();
+	            } catch(Exception e){
+	                e.printStackTrace();
+	            }
+	        }
+	    }
 	}
 	
 	public ResultSet findJob(String attr, boolean value){
@@ -211,7 +301,22 @@ public class JobDatabaseConnector {
 			e.printStackTrace();
 			rs = null;
 			return rs;
-		}
+		}finally {
+	        if(rs != null){
+	             try{
+	                  rs.close();
+	             } catch(Exception e){
+	                 e.printStackTrace();
+	             }
+	        }
+	        if(pst != null){
+	            try{
+	                pst.close();
+	            } catch(Exception e){
+	                e.printStackTrace();
+	            }
+	        }
+	    }
 		
 	}
 	
@@ -239,7 +344,22 @@ public class JobDatabaseConnector {
 			e.printStackTrace();
 			rs= null;
 			return rs;
-		}
+		}finally {
+	        if(rs != null){
+	             try{
+	                  rs.close();
+	             } catch(Exception e){
+	                 e.printStackTrace();
+	             }
+	        }
+	        if(pst != null){
+	            try{
+	                pst.close();
+	            } catch(Exception e){
+	                e.printStackTrace();
+	            }
+	        }
+	    }
 	}
 	public ResultSet findJob(String attr, Date value){
 		//search by jobLength, jobID, clientID or carID. 
@@ -262,10 +382,25 @@ public class JobDatabaseConnector {
 			e.printStackTrace();
 			rs= null;
 			return rs;
-		}
+		}finally {
+	        if(rs != null){
+	             try{
+	                  rs.close();
+	             } catch(Exception e){
+	                 e.printStackTrace();
+	             }
+	        }
+	        if(pst != null){
+	            try{
+	                pst.close();
+	            } catch(Exception e){
+	                e.printStackTrace();
+	            }
+	        }
+	    }
 	}
 	public int getMaxJobID(){
-		int max = -1000;
+		int max = 0;
 		try{
 			String q = "SELECT MAX(jobID) AS maxID FROM jobs";
 			pst = conn.prepareStatement(q);
@@ -273,7 +408,22 @@ public class JobDatabaseConnector {
 			return rs.getInt("maxID");
 		}catch(Exception e){
 			e.printStackTrace();
-		}
+		}finally {
+	        if(rs != null){
+	             try{
+	                  rs.close();
+	             } catch(Exception e){
+	                 e.printStackTrace();
+	             }
+	        }
+	        if(pst != null){
+	            try{
+	                pst.close();
+	            } catch(Exception e){
+	                e.printStackTrace();
+	            }
+	        }
+	    }
 		return max;	
 	}
 
