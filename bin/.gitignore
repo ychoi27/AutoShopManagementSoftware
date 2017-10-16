@@ -1,6 +1,8 @@
-/.DS_Store
-/database2/
-/util/
-/test/
+/connector/
 /dashboards/
+/jobschedule/
+/mainClass.class
 /person/
+/test/
+/test.class
+/util/
