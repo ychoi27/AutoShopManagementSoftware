@@ -66,9 +66,7 @@ public class partsDashboard extends javax.swing.JFrame {
         customerButton = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
         addJobButton = new javax.swing.JButton();
-        refreshTable = new javax.swing.JButton();
-        searchInput = new javax.swing.JTextField();
-        Category = new javax.swing.JComboBox<>();
+        partsSearch = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
         inventoryTable = new javax.swing.JScrollPane();
         partsTable = new javax.swing.JTable();
@@ -112,13 +110,27 @@ public class partsDashboard extends javax.swing.JFrame {
 
         backButton.setText("BACK");
 
-        addJobButton.setText("Request");
+        addJobButton.setText("Order");
+        addJobButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addJobButtonActionPerformed(evt);
+            }
+        });
 
-        refreshTable.setText("Refresh");
-
-        searchInput.setText("[Enter text]");
-
-        Category.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        partsSearch.setText("[Enter Serial Number, Name, carTypeId ]");
+        partsSearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                partsSearchMouseClicked(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                partsSearchMouseReleased(evt);
+            }
+        });
+        partsSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                partsSearchActionPerformed(evt);
+            }
+        });
 
         searchButton.setText("Search");
         searchButton.addActionListener(new java.awt.event.ActionListener() {
@@ -147,25 +159,20 @@ public class partsDashboard extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jobsButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(inventoryButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
+                    .addComponent(inventoryButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(customerButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(signoutButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(backButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(addJobButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 450, Short.MAX_VALUE)
-                        .addComponent(refreshTable, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(searchInput, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(Category, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(searchButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 130, Short.MAX_VALUE)
-                        .addComponent(inventoryTable, javax.swing.GroupLayout.PREFERRED_SIZE, 1012, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(addJobButton, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 200, Short.MAX_VALUE)
+                        .addComponent(partsSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50)
+                        .addComponent(searchButton)
+                        .addGap(114, 114, 114))
+                    .addComponent(inventoryTable, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 1012, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -174,24 +181,22 @@ public class partsDashboard extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(inventoryTable)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(inventoryTable, javax.swing.GroupLayout.PREFERRED_SIZE, 796, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(searchInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(partsSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(searchButton)
-                            .addComponent(Category, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(addJobButton)
-                            .addComponent(refreshTable)))
+                            .addComponent(addJobButton)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jobsButton, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+                        .addComponent(jobsButton, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(inventoryButton, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+                        .addComponent(inventoryButton, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(customerButton, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+                        .addComponent(customerButton, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(signoutButton, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
+                        .addComponent(signoutButton, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(backButton, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)))
+                        .addComponent(backButton, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -226,7 +231,23 @@ public class partsDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_customerButtonActionPerformed
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        // TODO add your handling code here:
+        if (partsSearch.getText().equals("")){
+            displayPartsTable();
+        }     
+        else{
+        String q ="select * from parts "
+                + "where parts_serial_number = '" +partsSearch.getText()+"'"
+                + " or partsName = '" + partsSearch.getText() + "'" 
+                + " or carTypeId = '" + partsSearch.getText() + "'" ;
+        try {
+            pst = conn.prepareStatement(q);
+            rs =pst.executeQuery();
+            partsTable.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (SQLException ex) {
+            Logger.getLogger(clientsDashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }           
+
+        }
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void signoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signoutButtonActionPerformed
@@ -236,6 +257,29 @@ public class partsDashboard extends javax.swing.JFrame {
         dispose();
 
     }//GEN-LAST:event_signoutButtonActionPerformed
+
+    private void partsSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_partsSearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_partsSearchActionPerformed
+
+    private void partsSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_partsSearchMouseClicked
+        // TODO add your handling code here:
+        partsSearch.setText("");
+
+    }//GEN-LAST:event_partsSearchMouseClicked
+
+    private void partsSearchMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_partsSearchMouseReleased
+        // TODO add your handling code here:
+        partsSearch.setText("[Enter Serial Number, Name, carTypeId ]");
+
+    }//GEN-LAST:event_partsSearchMouseReleased
+
+    private void addJobButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addJobButtonActionPerformed
+        PartsOrderDash jobsDash = new PartsOrderDash();
+        jobsDash.setVisible(true); 
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addJobButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -276,17 +320,15 @@ public class partsDashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> Category;
     private javax.swing.JButton addJobButton;
     private javax.swing.JButton backButton;
     private javax.swing.JButton customerButton;
     private javax.swing.JButton inventoryButton;
     private javax.swing.JScrollPane inventoryTable;
     private javax.swing.JButton jobsButton;
+    private javax.swing.JTextField partsSearch;
     private javax.swing.JTable partsTable;
-    private javax.swing.JButton refreshTable;
     private javax.swing.JButton searchButton;
-    private javax.swing.JTextField searchInput;
     private javax.swing.JButton signoutButton;
     // End of variables declaration//GEN-END:variables
 }

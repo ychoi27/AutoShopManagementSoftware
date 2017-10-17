@@ -32,28 +32,22 @@
           <Group type="102" alignment="0" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jobsButton" alignment="1" max="32767" attributes="0"/>
-                  <Component id="inventoryButton" alignment="1" pref="163" max="32767" attributes="0"/>
+                  <Component id="inventoryButton" alignment="1" max="32767" attributes="0"/>
                   <Component id="customerButton" alignment="1" pref="0" max="32767" attributes="0"/>
                   <Component id="signoutButton" alignment="1" max="32767" attributes="0"/>
                   <Component id="backButton" alignment="1" max="32767" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="addJobButton" min="-2" pref="100" max="-2" attributes="0"/>
-                      <EmptySpace pref="450" max="32767" attributes="0"/>
-                      <Component id="refreshTable" min="-2" pref="100" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="searchInput" min="-2" pref="210" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="Category" min="-2" pref="124" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="addJobButton" min="-2" pref="202" max="-2" attributes="0"/>
+                      <EmptySpace pref="200" max="32767" attributes="0"/>
+                      <Component id="partsSearch" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                       <Component id="searchButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="114" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="0" pref="130" max="32767" attributes="0"/>
-                      <Component id="inventoryTable" min="-2" pref="1012" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="inventoryTable" alignment="1" min="-2" pref="1012" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -65,26 +59,24 @@
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="inventoryTable" max="32767" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="inventoryTable" min="-2" pref="796" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="searchInput" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="partsSearch" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="searchButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="Category" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="addJobButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="refreshTable" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" attributes="0">
-                      <Component id="jobsButton" pref="222" max="32767" attributes="0"/>
+                      <Component id="jobsButton" pref="201" max="32767" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="inventoryButton" pref="223" max="32767" attributes="0"/>
+                      <Component id="inventoryButton" pref="202" max="32767" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="customerButton" pref="223" max="32767" attributes="0"/>
+                      <Component id="customerButton" pref="202" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="signoutButton" pref="225" max="32767" attributes="0"/>
+                      <Component id="signoutButton" pref="200" max="32767" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="backButton" pref="224" max="32767" attributes="0"/>
+                      <Component id="backButton" pref="203" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -133,33 +125,21 @@
     </Component>
     <Component class="javax.swing.JButton" name="addJobButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Request"/>
+        <Property name="text" type="java.lang.String" value="Order"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addJobButtonActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="refreshTable">
+    <Component class="javax.swing.JTextField" name="partsSearch">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Refresh"/>
+        <Property name="text" type="java.lang.String" value="[Enter Serial Number, Name, carTypeId ]"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="searchInput">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="[Enter text]"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JComboBox" name="Category">
-      <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="4">
-            <StringItem index="0" value="Item 1"/>
-            <StringItem index="1" value="Item 2"/>
-            <StringItem index="2" value="Item 3"/>
-            <StringItem index="3" value="Item 4"/>
-          </StringArray>
-        </Property>
-      </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-      </AuxValues>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="partsSearchMouseClicked"/>
+        <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="partsSearchMouseReleased"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="partsSearchActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="searchButton">
       <Properties>

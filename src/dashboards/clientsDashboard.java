@@ -683,6 +683,11 @@ public class clientsDashboard extends javax.swing.JFrame {
                 client_searchMouseClicked(evt);
             }
         });
+        client_search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                client_searchActionPerformed(evt);
+            }
+        });
 
         clientAdd.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         clientAdd.setText("add");
@@ -1129,10 +1134,10 @@ try{
         // TODO add your handling code here:
             // TODO add your handling code here:
         
-        String sql="INSERT INTO car (client_id,year,color,brand,model,plate,vin) values(?,?,?,?,?,?,?)";
+        String sql="INSERT INTO car (client_id,year,color,brand,model,plate,vin,carType) values(?,?,?,?,?,?,?,?)";
     try{
     pst =conn.prepareStatement(sql);
-
+    String carType = car_year.getText()+ car_brand.getText()+car_model.getText();
     pst.setString(1, clientId.getText());
     pst.setString(2, car_year.getText());
     pst.setString(3, car_color.getText());
@@ -1140,7 +1145,7 @@ try{
     pst.setString(5, car_model.getText());
     pst.setString(6, car_plate.getText());
     pst.setString(7, car_vin.getText());
-      
+    pst.setString(8, carType);
     pst.execute();
   
     JOptionPane.showMessageDialog(null, "Saved");
@@ -1289,6 +1294,10 @@ try{
         loginDash.setVisible(true);
         dispose();
     }//GEN-LAST:event_signoutButtonActionPerformed
+
+    private void client_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_client_searchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_client_searchActionPerformed
 
     /**
      * @param args the command line arguments
