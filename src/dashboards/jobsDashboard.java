@@ -14,6 +14,8 @@ import org.swiftgantt.GanttChart;
 import org.swiftgantt.model.GanttModel;
 import org.swiftgantt.model.Task;
 import org.swiftgantt.ui.TimeUnit;
+import java.text.*;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -27,17 +29,27 @@ public class jobsDashboard extends javax.swing.JFrame {
     public jobsDashboard() {
         initComponents();
         
-        GanttChart gantt = new GanttChart();
-        gantt.setTimeUnit(TimeUnit.Day);
+        gantt = new GanttChart();
+        gantt.setTimeUnit(TimeUnit.Hour);
+        startDate= LocalDateTime.now();
+        endDate= LocalDateTime.now().plusDays(7);
         
-        Config config = gantt.getConfig();
+        koMonth = startDate.getMonthValue();
+        koYear = startDate.getYear();
+        koDate = startDate.getDayOfMonth();
+        
+        dlMonth= endDate.getMonthValue();
+        dlYear = endDate.getYear();
+        dlDate = endDate.getDayOfMonth();
+        
+        config = gantt.getConfig();
         config.setWorkingTimeBackColor(Color.YELLOW);//Set background color for working time.
-        config.setTimeUnitWidth(50);//Set width for time unit
-        config.setWorkingDaysSpanOfWeek(new int[]{Calendar.MONDAY, Calendar.THURSDAY});//Set span of working days in each week
-        GanttModel model = new GanttModel();
-        model.setKickoffTime( new org.swiftgantt.common.Time(2010, 0, 1));
-        model.setDeadline( new org.swiftgantt.common.Time(2012, 0, 30));
-
+        config.setTimeUnitWidth(100);//Set width for time unit
+        config.setWorkingDaysSpanOfWeek(new int[]{Calendar.MONDAY, Calendar.FRIDAY});//Set span of working days in each week
+        config.setWorkingHoursSpanOfDay(new int[]{9,18});
+        model = new GanttModel();
+        model.setKickoffTime( new org.swiftgantt.common.Time(koYear, koMonth, koDate));
+        model.setDeadline( new org.swiftgantt.common.Time(dlYear, dlMonth, dlDate));
         Task taskGroup = new Task("My Work 1", new org.swiftgantt.common.Time(2010, 5, 1), new org.swiftgantt.common.Time(2010, 6, 30));
         Task task1 = new Task("Sub-task 1", new org.swiftgantt.common.Time(2010, 0, 1), new org.swiftgantt.common.Time(2010, 0, 5));
         org.swiftgantt.model.Task task2 = new Task();
@@ -75,7 +87,6 @@ public class jobsDashboard extends javax.swing.JFrame {
         searchInput = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
         Category = new javax.swing.JComboBox<>();
-        displayCurrentDate = new javax.swing.JTextField();
         allJobsTable = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jobDescription = new javax.swing.JScrollPane();
@@ -84,6 +95,7 @@ public class jobsDashboard extends javax.swing.JFrame {
         nextDate = new javax.swing.JButton();
         previousDate = new javax.swing.JButton();
         chartPanel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -143,8 +155,6 @@ public class jobsDashboard extends javax.swing.JFrame {
 
         Category.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        displayCurrentDate.setText("CurrentDate");
-
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -163,20 +173,32 @@ public class jobsDashboard extends javax.swing.JFrame {
 
         refreshTable.setText("Refresh");
 
-        nextDate.setText("Nextdate");
+        nextDate.setText("Next Week");
+        nextDate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nextDateButtonActionPerformed(evt);
+            }
+        });
 
-        previousDate.setText("previousDate");
+        previousDate.setText("Last Week");
+        previousDate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                previousDateButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout chartPanelLayout = new javax.swing.GroupLayout(chartPanel);
         chartPanel.setLayout(chartPanelLayout);
         chartPanelLayout.setHorizontalGroup(
             chartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1225, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         chartPanelLayout.setVerticalGroup(
             chartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 533, Short.MAX_VALUE)
+            .addGap(0, 539, Short.MAX_VALUE)
         );
+
+        jLabel1.setText("current date");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -196,19 +218,18 @@ public class jobsDashboard extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(previousDate, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(displayCurrentDate)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(nextDate, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(17, 17, 17))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(chartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jobDescription, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
-                            .addComponent(allJobsTable, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                        .addGap(4, 4, 4))
+                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(nextDate, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(chartPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(allJobsTable, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jobDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(490, 490, 490))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(addJobButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 789, Short.MAX_VALUE)
@@ -230,16 +251,16 @@ public class jobsDashboard extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(allJobsTable, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jobDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(displayCurrentDate, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(nextDate)
-                                    .addComponent(previousDate))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(previousDate)
+                                    .addComponent(jLabel1))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(chartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(64, 64, 64))
+                        .addGap(116, 116, 116))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(7, 7, 7)
                         .addComponent(jobsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -250,12 +271,12 @@ public class jobsDashboard extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(signoutButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(signoutButton, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(backButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(backButton, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)
                         .addGap(12, 12, 12))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 507, Short.MAX_VALUE)
+                        .addGap(0, 558, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(searchInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(searchButton)
@@ -272,7 +293,14 @@ public class jobsDashboard extends javax.swing.JFrame {
     private void jobsButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jobsButtonMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jobsButtonMouseClicked
-
+    private void previousDateButtonActionPerformed(java.awt.event.ActionEvent evt){
+    	deployPreviousDate();
+    	gantt.setVisible(true);
+    }
+    private void nextDateButtonActionPerformed(java.awt.event.ActionEvent evt){
+    	deployNextDate();
+    	gantt.setVisible(true);
+    }
     private void customerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerButtonActionPerformed
         // TODO add your handling code here:
         clientsDashboard clientsDash = new clientsDashboard();
@@ -304,6 +332,7 @@ public class jobsDashboard extends javax.swing.JFrame {
         loginDash.setVisible(true);
         dispose();
     }//GEN-LAST:event_signoutButtonActionPerformed
+
 
     /**
      * @param args the command line arguments
@@ -342,6 +371,37 @@ public class jobsDashboard extends javax.swing.JFrame {
             }
         });
     }
+    
+    private void deployPreviousDate(){
+    	startDate = startDate.minusDays(7);
+    	endDate = endDate.minusDays(7);
+    	
+        koMonth = startDate.getMonthValue();
+        koYear = startDate.getYear();
+        koDate = startDate.getDayOfMonth();
+        
+        dlMonth= endDate.getMonthValue();
+        dlYear = endDate.getYear();
+        dlDate = endDate.getDayOfMonth();
+        
+        model.setKickoffTime( new org.swiftgantt.common.Time(koYear, koMonth, koDate));
+        model.setDeadline( new org.swiftgantt.common.Time(dlYear, dlMonth, dlDate));
+    }
+    private void deployNextDate(){
+    	startDate = startDate.plusDays(7);
+    	endDate = endDate.plusDays(7);
+    	
+        koMonth = startDate.getMonthValue();
+        koYear = startDate.getYear();
+        koDate = startDate.getDayOfMonth();
+        
+        dlMonth= endDate.getMonthValue();
+        dlYear = endDate.getYear();
+        dlDate = endDate.getDayOfMonth();
+        
+        model.setKickoffTime( new org.swiftgantt.common.Time(koYear, koMonth, koDate));
+        model.setDeadline( new org.swiftgantt.common.Time(dlYear, dlMonth, dlDate));
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> Category;
@@ -350,8 +410,8 @@ public class jobsDashboard extends javax.swing.JFrame {
     private javax.swing.JButton backButton;
     private javax.swing.JPanel chartPanel;
     private javax.swing.JButton customerButton;
-    private javax.swing.JTextField displayCurrentDate;
     private javax.swing.JButton inventoryButton;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JList<String> jList1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextPane jTextPane1;
@@ -363,5 +423,17 @@ public class jobsDashboard extends javax.swing.JFrame {
     private javax.swing.JButton searchButton;
     private javax.swing.JTextField searchInput;
     private javax.swing.JButton signoutButton;
+    private int koMonth;
+    private int koYear;
+    private int koDate;
+    
+    private int dlMonth;
+    private int dlYear;
+    private int dlDate;
+    private GanttChart gantt;
+    private Config config;
+    private GanttModel model;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,8 +1,10 @@
+/.DS_Store
 /connector/
 /dashboards/
 /jobschedule/
 /mainClass.class
 /person/
+/swiftGannchart.class
 /test/
 /test.class
 /util/
