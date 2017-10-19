@@ -50,12 +50,12 @@ public class jobsDashboard extends javax.swing.JFrame {
         model = new GanttModel();
         model.setKickoffTime( new org.swiftgantt.common.Time(koYear, koMonth, koDate));
         model.setDeadline( new org.swiftgantt.common.Time(dlYear, dlMonth, dlDate));
-        Task taskGroup = new Task("My Work 1", new org.swiftgantt.common.Time(2010, 5, 1), new org.swiftgantt.common.Time(2010, 6, 30));
-        Task task1 = new Task("Sub-task 1", new org.swiftgantt.common.Time(2010, 0, 1), new org.swiftgantt.common.Time(2010, 0, 5));
+        Task taskGroup = new Task("My Work 1", new org.swiftgantt.common.Time(2017, 10, 17), new org.swiftgantt.common.Time(2017, 10, 30));
+        Task task1 = new Task("Sub-task 1", new org.swiftgantt.common.Time(2017, 10, 17), new org.swiftgantt.common.Time(2017, 10, 18));
         org.swiftgantt.model.Task task2 = new Task();
         task2.setName("Sub-task 2");
-        task2.setStart(new org.swiftgantt.common.Time(2010, 0, 6));
-        task2.setEnd(new org.swiftgantt.common.Time(2010, 0, 18));// Since version 0.3.0, the end time set to a task is included in duration of the task
+        task2.setStart(new org.swiftgantt.common.Time(2017, 10, 19));
+        task2.setEnd(new org.swiftgantt.common.Time(2017, 10, 21));// Since version 0.3.0, the end time set to a task is included in duration of the task
 
         taskGroup.add(new org.swiftgantt.model.Task[]{task1, task2});
 
