@@ -38,7 +38,7 @@ public class JobDatabaseConnector {
         SqliteConnection mainConn = new SqliteConnection();
         conn = mainConn.connect(config.getProp("dbpath"));
 	}
-	public int createJob(String jobStatus, int jobTypeID, double handicap, double priority, boolean partsAvailable, int jobLength, int jobID, boolean walkIn, int clientID, int carID, int mechanicID, Date jobStartDateHour, Date jobEndDateHour){
+	public int createJob(String jobStatus, int jobTypeID, double handicap, double priority, boolean partsAvailable, int jobLength, int jobID, boolean walkIn, int clientID, int carID, int mechanicID, java.sql.Timestamp jobStartDateHour, java.sql.Timestamp jobEndDateHour){
 		try{
 			String q = "INSERT INTO jobs (jobStatus, jobTypeID, handicap, priority, partsAvailable, jobLength, jobID, walkIn, clientID, carID, mechanicID, jobStartDateHour, jobEndDateHour) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);";
 			pst= conn.prepareStatement(q);
@@ -53,8 +53,8 @@ public class JobDatabaseConnector {
 			pst.setInt(9, clientID);
 			pst.setInt(10, carID);
 			pst.setInt(11, mechanicID);
-			pst.setDate(12, jobStartDateHour);
-			pst.setDate(13, jobEndDateHour);
+			pst.setTimestamp(12, jobStartDateHour);
+			pst.setTimestamp(13, jobEndDateHour);
 			int result= pst.executeUpdate();
 			return result;
 		}catch(Exception e){
@@ -139,8 +139,14 @@ public class JobDatabaseConnector {
 			case "jobid":
 			case "clientid":
 			case "carid":
+			case "mechanicid":
 				int intVal = (int) newValue;
 				pst.setInt(1, intVal);
+				break;
+			case "jobstartdatehour":
+			case "jobenddatehour":
+				java.sql.Timestamp timeVal = (Timestamp) newValue;
+				pst.setTimestamp(1, timeVal);
 				break;
 			default:
 				return -1000;
@@ -361,7 +367,7 @@ public class JobDatabaseConnector {
 	        }
 	    }
 	}
-	public ResultSet findJob(String attr, Date value){
+	public ResultSet findJob(String attr, java.sql.Timestamp value){
 		//search by jobLength, jobID, clientID or carID. 
 		try{
 			String q = "SELECT * FROM jobs WHERE " + attr + "=?";
@@ -370,7 +376,7 @@ public class JobDatabaseConnector {
 			case "jobstartdatehour":
 			case "jobenddatehour":
 				//Do SQL search for jobStartDateHour or jobEndDateHour value and set rs to result set
-				pst.setDate(1, value);
+				pst.setTimestamp(1, value);
 				rs = pst.executeQuery();
 				return rs;
 			default:

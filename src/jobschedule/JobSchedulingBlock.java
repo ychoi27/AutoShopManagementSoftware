@@ -1,6 +1,7 @@
 package jobschedule;
 import connector.*;
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 
 public class JobSchedulingBlock {
@@ -16,8 +17,8 @@ public class JobSchedulingBlock {
 	private int jobID;//
 	private boolean walkIn;//
 	private int mechanicID;
-	private Date jobStartDateHour;
-	private Date jobEndDateHour;
+	private java.sql.Timestamp jobStartDateHour;
+	private java.sql.Timestamp jobEndDateHour;
 	
 	
 	public JobSchedulingBlock(String jobType, boolean walkIn, int clientID, int carID){
@@ -32,7 +33,7 @@ public class JobSchedulingBlock {
 		if(!partsAvailable){
 			calendar.add(Calendar.DATE, 2);
 		}
-		jobStartDateHour= new java.sql.Date(calendar.getTime().getTime());
+		jobStartDateHour= java.sql.Timestamp.valueOf(LocalDateTime.now());
 		this.jobStatus= (partsAvailable? "ready":"waiting");
 		this.jobLength = jtdc.getJobLength(jobTypeID);
 		this.walkIn = walkIn;
@@ -58,8 +59,8 @@ public class JobSchedulingBlock {
 		this.jobID = rs.getInt("jobID");
 		this.walkIn = rs.getBoolean("walkIn");
 		this.mechanicID = rs.getInt("mechanicID");
-		this.jobStartDateHour = rs.getDate("jobStartDateHour");
-		this.jobEndDateHour = rs.getDate("jobEndDateHour");
+		this.jobStartDateHour = rs.getTimestamp("jobStartDateHour");
+		this.jobEndDateHour = rs.getTimestamp("jobEndDateHour");
 		
 		}catch(Exception e){
 			e.printStackTrace();
