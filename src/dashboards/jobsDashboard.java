@@ -173,19 +173,9 @@ public class jobsDashboard extends javax.swing.JFrame {
 
         refreshTable.setText("Refresh");
 
-        nextDate.setText("Next Week");
-        nextDate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nextDateButtonActionPerformed(evt);
-            }
-        });
+        nextDate.setText("Nextdate");
 
-        previousDate.setText("Last Week");
-        previousDate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                previousDateButtonActionPerformed(evt);
-            }
-        });
+        previousDate.setText("previousDate");
 
         javax.swing.GroupLayout chartPanelLayout = new javax.swing.GroupLayout(chartPanel);
         chartPanel.setLayout(chartPanelLayout);
@@ -198,7 +188,9 @@ public class jobsDashboard extends javax.swing.JFrame {
             .addGap(0, 539, Short.MAX_VALUE)
         );
 
-        jLabel1.setText("current date");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Calendar cal = Calendar.getInstance();
+        jLabel1.setText(dateFormat.format(cal));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -423,17 +415,5 @@ public class jobsDashboard extends javax.swing.JFrame {
     private javax.swing.JButton searchButton;
     private javax.swing.JTextField searchInput;
     private javax.swing.JButton signoutButton;
-    private int koMonth;
-    private int koYear;
-    private int koDate;
-    
-    private int dlMonth;
-    private int dlYear;
-    private int dlDate;
-    private GanttChart gantt;
-    private Config config;
-    private GanttModel model;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
     // End of variables declaration//GEN-END:variables
 }
