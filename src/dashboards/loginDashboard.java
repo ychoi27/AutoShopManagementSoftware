@@ -220,6 +220,11 @@ public class loginDashboard extends javax.swing.JFrame {
         clientsDashboard clientsDash = new clientsDashboard();
         clientsDash.setVisible(true);
         dispose();
+            try {
+                conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(loginDashboard.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_loginButtonActionPerformed
 

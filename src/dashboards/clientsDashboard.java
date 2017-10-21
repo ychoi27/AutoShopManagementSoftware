@@ -285,7 +285,7 @@ public class clientsDashboard extends javax.swing.JFrame {
             .addGroup(carEditPanelLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addGroup(carEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(car_id, javax.swing.GroupLayout.PREFERRED_SIZE, 34, Short.MAX_VALUE)
+                    .addComponent(car_id, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
                     .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(carEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
