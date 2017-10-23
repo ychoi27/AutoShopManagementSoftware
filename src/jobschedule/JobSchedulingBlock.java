@@ -51,16 +51,18 @@ public class JobSchedulingBlock {
 		try{
 		ResultSet rs = jdc.findJob("jobID", "=", jobID);
 		
-		this.jobStatus = rs.getString("jobID");
-		this.handicap = rs.getDouble("handicap");
-		this.priority = rs.getDouble("priority");
-		this.partsAvailable = rs.getBoolean("partsAvailable");
-		this.jobLength = rs.getInt("jobLength");
-		this.jobID = rs.getInt("jobID");
-		this.walkIn = rs.getBoolean("walkIn");
-		this.mechanicID = rs.getInt("mechanicID");
-		this.jobStartDateHour = rs.getTimestamp("jobStartDateHour");
-		this.jobEndDateHour = rs.getTimestamp("jobEndDateHour");
+		while(rs.next()){
+			this.jobStatus = rs.getString("jobStatus");
+			this.handicap = rs.getDouble("handicap");
+			this.priority = rs.getDouble("priority");
+			this.partsAvailable = rs.getBoolean("partsAvailable");
+			this.jobLength = rs.getInt("jobLength");
+			this.jobID = rs.getInt("jobID");
+			this.walkIn = rs.getBoolean("walkIn");
+			this.mechanicID = rs.getInt("mechanicID");
+			this.jobStartDateHour = rs.getTimestamp("jobStartDateHour");
+			this.jobEndDateHour = rs.getTimestamp("jobEndDateHour");
+		}
 		
 		}catch(Exception e){
 			e.printStackTrace();
@@ -73,8 +75,18 @@ public class JobSchedulingBlock {
 	private void generatePriority(){
 		this.priority= 1/Math.pow(jobLength, 2) * Math.pow(handicap, 3) * (walkIn? 1:0.1) *  this.priority;
 		
-		
-		
+	}
+	
+	public double getPriority(){
+		return this.priority;
+	}
+	
+	public int getJobID(){
+		return this.jobID;
+	}
+	
+	public void setMechanic(int mechanicID){
+		this.mechanicID=mechanicID;
 	}
 	
 	
