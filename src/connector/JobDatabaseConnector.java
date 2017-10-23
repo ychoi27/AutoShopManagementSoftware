@@ -206,6 +206,18 @@ public class JobDatabaseConnector {
 	    }
 		
 	}
+	public ResultSet getAllJobsByID(){
+		try{
+			String q = "SELECT jobID FROM jobs";
+			pst = conn.prepareStatement(q);
+			rs=pst.executeQuery();
+			return rs;
+		}catch(Exception e){
+			e.printStackTrace();
+			rs=null;
+			return rs;
+		}
+	}
 	
 	public ResultSet findJob(String attr, String value){
 		//search by status
