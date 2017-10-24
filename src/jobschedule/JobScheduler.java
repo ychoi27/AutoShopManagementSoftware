@@ -19,13 +19,13 @@ public class JobScheduler {
 	
 	public void scheduleJob(JobSchedulingBlock jsb){
 		populateListFromDatabase();
-		jobsList.addJob(jsb);
-		double maxPriority = 0.0;
+		double maxPriority = -1.0;
 		Mechanic topContender = null;
 		int topContenderIndex = 0;
+		int index = 0;
 		while(jobsList.peekMax()!=null){
-			int index = 0;
 			for(Mechanic mechanic : mech){
+				if(jobsList.peekMax()==null) return;
 				if(mechanic.jobs.peekMax()!=null){
 					double currentPriority = mechanic.jobs.peekMax().getPriority();
 					if(currentPriority > maxPriority){
@@ -44,10 +44,10 @@ public class JobScheduler {
 				jobsList.peekMax().setMechanic(topContenderIndex);
 				topContender.jobs.addJob(jobsList.getMax());
 			}
-		}
-		for(Mechanic mechanic : mech){
-			if(!mechanic.hasActiveJob() && (mechanic.jobs.peekMax() != null)){
-				mechanic.active = mechanic.jobs.getMax();
+			for(Mechanic mechanic : mech){
+				if(!mechanic.hasActiveJob() && (mechanic.jobs.peekMax() != null)){
+					mechanic.active = mechanic.jobs.getMax();
+				}
 			}
 		}
 		writeJobsToDatabase();
@@ -64,7 +64,9 @@ public class JobScheduler {
 		if(rs!=null){
 			try{
 				while(rs.next()){
-					jobsList.addJob(new JobSchedulingBlock(rs.getInt("jobID")));
+					System.out.println(rs.getInt("jobID"));
+					JobSchedulingBlock jsb = new JobSchedulingBlock(rs.getInt("jobID"));
+					jobsList.addJob(jsb);
 				}
 			}catch(Exception e){
 				e.printStackTrace();

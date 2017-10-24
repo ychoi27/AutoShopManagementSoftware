@@ -29,10 +29,9 @@ public class MaxHeap {
 		jobHeap[++lastIndex] = jsb;
 		int index = lastIndex;
 		if(jobHeap[index/2] == null){
-			jobHeap[index/2] = jsb;
 			return;
 		}
-		while(jobHeap[index/2].getPriority() < jsb.getPriority()){ //while parent node priority is less than child node priority
+		while((jobHeap[index/2] != null) && (jobHeap[index/2].getPriority() < jsb.getPriority())){ //while parent node priority is less than child node priority
 			//swap child and parent process position in the heap
 			JobSchedulingBlock temp = jobHeap[index/2];
 			jobHeap[index/2] = jsb;
