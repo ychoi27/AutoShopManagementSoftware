@@ -240,22 +240,7 @@ public class JobDatabaseConnector {
 			e.printStackTrace();
 			rs = null;
 			return rs;
-		}finally {
-	        if(rs != null){
-	             try{
-	                  rs.close();
-	             } catch(Exception e){
-	                 e.printStackTrace();
-	             }
-	        }
-	        if(pst != null){
-	            try{
-	                pst.close();
-	            } catch(Exception e){
-	                e.printStackTrace();
-	            }
-	        }
-	    }
+		}
 	}
 	
 	public ResultSet findJob(String attr, String comparator, double value){
@@ -280,22 +265,7 @@ public class JobDatabaseConnector {
 			e.printStackTrace();
 			rs = null;
 			return rs;
-		}finally {
-	        if(rs != null){
-	             try{
-	                  rs.close();
-	             } catch(Exception e){
-	                 e.printStackTrace();
-	             }
-	        }
-	        if(pst != null){
-	            try{
-	                pst.close();
-	            } catch(Exception e){
-	                e.printStackTrace();
-	            }
-	        }
-	    }
+		}
 	}
 	
 	public ResultSet findJob(String attr, boolean value){
@@ -319,22 +289,7 @@ public class JobDatabaseConnector {
 			e.printStackTrace();
 			rs = null;
 			return rs;
-		}finally {
-	        if(rs != null){
-	             try{
-	                  rs.close();
-	             } catch(Exception e){
-	                 e.printStackTrace();
-	             }
-	        }
-	        if(pst != null){
-	            try{
-	                pst.close();
-	            } catch(Exception e){
-	                e.printStackTrace();
-	            }
-	        }
-	    }
+		}
 		
 	}
 	
@@ -342,6 +297,7 @@ public class JobDatabaseConnector {
 		//search by jobLength, jobID, clientID or carID. 
 		try{
 			String q = "SELECT * FROM jobs WHERE " + attr + comparator + "?";
+			System.out.println(q);
 			pst = conn.prepareStatement(q);
 		switch(attr.toLowerCase()){
 		case "joblength":
@@ -362,22 +318,7 @@ public class JobDatabaseConnector {
 			e.printStackTrace();
 			rs= null;
 			return rs;
-		}finally {
-	        if(rs != null){
-	             try{
-	                  rs.close();
-	             } catch(Exception e){
-	                 e.printStackTrace();
-	             }
-	        }
-	        if(pst != null){
-	            try{
-	                pst.close();
-	            } catch(Exception e){
-	                e.printStackTrace();
-	            }
-	        }
-	    }
+		}
 	}
 	public ResultSet findJob(String attr, java.sql.Timestamp value){
 		//search by jobLength, jobID, clientID or carID. 
@@ -400,22 +341,7 @@ public class JobDatabaseConnector {
 			e.printStackTrace();
 			rs= null;
 			return rs;
-		}finally {
-	        if(rs != null){
-	             try{
-	                  rs.close();
-	             } catch(Exception e){
-	                 e.printStackTrace();
-	             }
-	        }
-	        if(pst != null){
-	            try{
-	                pst.close();
-	            } catch(Exception e){
-	                e.printStackTrace();
-	            }
-	        }
-	    }
+		}
 	}
 	public int getMaxJobID(){
 		int max = 0;

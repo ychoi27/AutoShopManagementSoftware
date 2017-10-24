@@ -5,9 +5,9 @@ import java.time.LocalDateTime;
 import java.util.Calendar;
 
 public class JobSchedulingBlock {
-	private JobDatabaseConnector jdc=new JobDatabaseConnector();
-	private JobTypeConnector jtdc= new JobTypeConnector();
-	private PartDatabaseConnector pdc = new PartDatabaseConnector();
+	private JobDatabaseConnector jdc;
+	private JobTypeConnector jtdc;
+	private PartDatabaseConnector pdc;
 	private String jobStatus;
 	private int jobTypeID;//
 	private double handicap;//
@@ -23,8 +23,9 @@ public class JobSchedulingBlock {
 	
 	public JobSchedulingBlock(String jobType, boolean walkIn, int clientID, int carID){
 		//creates a job in the database and initializes the JobSchedulingBlock
-		jdc= new JobDatabaseConnector();
-		
+		this.jdc = new JobDatabaseConnector();
+		this.jtdc= new JobTypeConnector();
+		this.pdc = new PartDatabaseConnector();
 		this.jobID = jdc.getMaxJobID() + 1;
 		this.jobTypeID = jtdc.getJobTypeID(jobType);
 		this.handicap = 1;
@@ -47,11 +48,15 @@ public class JobSchedulingBlock {
 	
 	public JobSchedulingBlock(int jobID){
 		//initializes the JobSchedulingBlock for an existing job in the database
-		jdc= new JobDatabaseConnector();
+		this.jdc = new JobDatabaseConnector();
+		this.jtdc= new JobTypeConnector();
+		this.pdc = new PartDatabaseConnector();
+		
 		try{
 		ResultSet rs = jdc.findJob("jobID", "=", jobID);
 		
 		while(rs.next()){
+			System.out.println(rs.getString("jobStatus"));
 			this.jobStatus = rs.getString("jobStatus");
 			this.handicap = rs.getDouble("handicap");
 			this.priority = rs.getDouble("priority");
