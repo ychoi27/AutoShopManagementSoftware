@@ -299,7 +299,6 @@ public class JobDatabaseConnector {
 		//search by jobLength, jobID, clientID or carID. 
 		try{
 			String q = "SELECT * FROM jobs WHERE " + attr + comparator + "?";
-			System.out.println(q);
 			pst = conn.prepareStatement(q);
 		switch(attr.toLowerCase()){
 		case "joblength":

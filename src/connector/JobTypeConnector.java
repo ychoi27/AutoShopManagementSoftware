@@ -86,7 +86,7 @@ public class JobTypeConnector {
 	public int getJobLength(int jobTypeID){
 		int result=-100;
 		try{
-		String q = "SELECT jobLength FROM jobTypes WHERE partID=?";
+		String q = "SELECT jobLength FROM jobTypes WHERE jobTypeID=?";
 		pst= conn.prepareStatement(q);
 		pst.setInt(1, jobTypeID);
 		rs=pst.executeQuery();
