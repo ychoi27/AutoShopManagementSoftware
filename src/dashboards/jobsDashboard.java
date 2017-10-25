@@ -35,7 +35,7 @@ public class jobsDashboard extends javax.swing.JFrame {
         
         gantt = new GanttChart();
         gantt.setTimeUnit(TimeUnit.Hour);
-        startDate= LocalDateTime.now();
+        startDate= LocalDateTime.now().plusDays(1);
         endDate= LocalDateTime.now().plusDays(7);
         
         koMonth = startDate.getMonthValue();
@@ -49,12 +49,12 @@ public class jobsDashboard extends javax.swing.JFrame {
         config = gantt.getConfig();
         config.setWorkingTimeBackColor(Color.YELLOW);//Set background color for working time.
         config.setTimeUnitWidth(100);//Set width for time unit
-        config.setWorkingDaysSpanOfWeek(new int[]{Calendar.MONDAY, Calendar.FRIDAY});//Set span of working days in each week
-        config.setWorkingHoursSpanOfDay(new int[]{9,18});
+        config.setWorkingDaysSpanOfWeek(new int[]{Calendar.MONDAY, Calendar.SUNDAY});//Set span of working days in each week
+        config.setWorkingHoursSpanOfDay(new int[]{9,17});
         model = new GanttModel();
         model.setKickoffTime( new org.swiftgantt.common.Time(koYear, koMonth, koDate));
         model.setDeadline( new org.swiftgantt.common.Time(dlYear, dlMonth, dlDate));
-        Task taskGroup = new Task("My Work 1", new org.swiftgantt.common.Time(2017, 10, 17), new org.swiftgantt.common.Time(2017, 10, 30));
+        /*Task taskGroup = new Task("My Work 1", new org.swiftgantt.common.Time(2017, 10, 17), new org.swiftgantt.common.Time(2017, 10, 30));
         Task task1 = new Task("Sub-task 1", new org.swiftgantt.common.Time(2017, 10, 17), new org.swiftgantt.common.Time(2017, 10, 18));
         org.swiftgantt.model.Task task2 = new Task();
         task2.setName("Sub-task 2");
@@ -64,7 +64,7 @@ public class jobsDashboard extends javax.swing.JFrame {
         taskGroup.add(new org.swiftgantt.model.Task[]{task1, task2});
 
         task2.addPredecessor(task1);
-        model.addTask(taskGroup);
+        model.addTask(taskGroup);*/
         gantt.setModel(model);
         gantt.setVisible(true);
         
@@ -312,7 +312,7 @@ public class jobsDashboard extends javax.swing.JFrame {
     private void currentWeekButtonActionPerformed(java.awt.event.ActionEvent evt){
         gantt = new GanttChart();
         gantt.setTimeUnit(TimeUnit.Hour);
-        startDate= LocalDateTime.now();
+        startDate= LocalDateTime.now().plusDays(1);
         endDate= LocalDateTime.now().plusDays(7);
         
         koMonth = startDate.getMonthValue();

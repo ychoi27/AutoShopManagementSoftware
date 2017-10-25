@@ -1,4 +1,4 @@
-package jobschedule;
+package connector;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Calendar;
 
-import connector.SqliteConnection;
 import util.ConfigManager;
 import connector.*;
 
@@ -37,7 +36,7 @@ public class PartDatabaseConnector {
     			Calendar calendar = Calendar.getInstance();
     			calendar.add(Calendar.DATE, 2);
     			java.sql.Date arrivalDate = new java.sql.Date(calendar.getTime().getTime());
-    			odc.createOrder(odc.getMaxOrderID() + 1, partID, arrivalDate);
+    			odc.createOrder(partID, arrivalDate);
     			return false;
     		
     		}else{

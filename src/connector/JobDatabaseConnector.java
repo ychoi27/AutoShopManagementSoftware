@@ -77,9 +77,9 @@ public class JobDatabaseConnector {
 	        }
 	    }
 	}
-	public int createJob(String jobStatus, int jobTypeID, double handicap, double priority, boolean partsAvailable, int jobLength, int jobID, boolean walkIn, int clientID, int carID ){
+	public int createJob(String jobStatus, int jobTypeID, double handicap, double priority, boolean partsAvailable, int jobLength, int jobID, boolean walkIn, int clientID, int carID, java.sql.Date datePartsIn ){
 		try{
-			String q = "INSERT INTO jobs (jobStatus, jobTypeID, handicap, priority, partsAvailable, jobLength, jobID, walkIn, clientID, carID) VALUES (?,?,?,?,?,?,?,?,?,?);";
+			String q = "INSERT INTO jobs (jobStatus, jobTypeID, handicap, priority, partsAvailable, jobLength, jobID, walkIn, clientID, carID, datePartsIn) VALUES (?,?,?,?,?,?,?,?,?,?,?);";
 			pst= conn.prepareStatement(q);
 			pst.setString(1, jobStatus);
 			pst.setInt(2, jobTypeID);
@@ -91,6 +91,7 @@ public class JobDatabaseConnector {
 			pst.setBoolean(8, walkIn);
 			pst.setInt(9, clientID);
 			pst.setInt(10, carID);
+			pst.setDate(11, datePartsIn);
 			int result= pst.executeUpdate();
 			return result;
 		}catch(Exception e){
@@ -206,10 +207,11 @@ public class JobDatabaseConnector {
 	    }
 		
 	}
-	public ResultSet getAllJobsByID(){
+	public ResultSet getCurrentJobsByID(java.sql.Date currentDate){
 		try{
-			String q = "SELECT jobID FROM jobs";
+			String q = "SELECT jobID FROM jobs WHERE datePartsIn<=?";
 			pst = conn.prepareStatement(q);
+			pst.setDate(1, currentDate);
 			rs=pst.executeQuery();
 			return rs;
 		}catch(Exception e){

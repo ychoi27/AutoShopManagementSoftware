@@ -19,13 +19,12 @@ public class OrderDatabaseConnector {
         conn = mainConn.connect(config.getProp("dbpath"));
         
     }
-    public int createOrder(int orderID, int partID, Date arrivalDate){
+    public int createOrder(int partID, java.sql.Date arrivalDate){
 		try{
-			String q = "INSERT INTO orders (orderID, partID, arrivalDate) VALUES (?,?,?);";
+			String q = "INSERT INTO orders (partID, arrivalDate) VALUES (?,?);";
 			pst= conn.prepareStatement(q);
-			pst.setInt(1, orderID);
-			pst.setInt(2, partID);
-			pst.setDate(3, arrivalDate);
+			pst.setInt(1, partID);
+			pst.setDate(2, arrivalDate);
 			int result= pst.executeUpdate();
 			return result;
 		}catch(Exception e){
