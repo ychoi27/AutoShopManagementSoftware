@@ -1,7 +1,7 @@
 package jobschedule;
 
 public class MaxHeap {
-	JobSchedulingBlock[] jobHeap = new JobSchedulingBlock[1000];
+	JobSchedulingBlock[] jobHeap = new JobSchedulingBlock[100];
 	int lastIndex;
 	//constructor
 	public MaxHeap(){
