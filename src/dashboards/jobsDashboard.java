@@ -23,7 +23,7 @@ import javax.swing.JButton;
 
 /**
  *
- * @author jimmy_000
+ * @author jane
  */
 public class jobsDashboard extends javax.swing.JFrame {
 
@@ -49,7 +49,7 @@ public class jobsDashboard extends javax.swing.JFrame {
         config = gantt.getConfig();
         config.setWorkingTimeBackColor(Color.YELLOW);//Set background color for working time.
         config.setTimeUnitWidth(100);//Set width for time unit
-        config.setWorkingDaysSpanOfWeek(new int[]{Calendar.MONDAY, Calendar.SUNDAY});//Set span of working days in each week
+        config.setWorkingDaysSpanOfWeek(new int[]{Calendar.SUNDAY, Calendar.SATURDAY});//Set span of working days in each week
         config.setWorkingHoursSpanOfDay(new int[]{9,17});
         model = new GanttModel();
         model.setKickoffTime( new org.swiftgantt.common.Time(koYear, koMonth, koDate));

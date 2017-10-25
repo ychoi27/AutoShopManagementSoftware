@@ -11,7 +11,7 @@ import connector.*;
 
 
 public class JobScheduler {
-	MaxHeap jobsList;
+	public /*public for testing purposes*/MaxHeap jobsList;
 	Mechanic mech[];
 	JobDatabaseConnector jdc;
 	LocalDate startDate;
@@ -80,7 +80,8 @@ public class JobScheduler {
 		writeJobsToDatabase();	
 	}
 		
-	private JobSchedulingBlock[] populateListFromDatabase(){
+	/*should be private, made pulic for testing purposes*/
+	public JobSchedulingBlock[] populateListFromDatabase(){
 		if(!jobsList.isEmpty()){
 			jobsList = new MaxHeap();
 		}
