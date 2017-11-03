@@ -7,6 +7,7 @@ package dashboards;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.sql.ResultSet;
 import java.util.Calendar;
 import javax.swing.JScrollPane;
 import org.swiftgantt.Config;
@@ -14,6 +15,10 @@ import org.swiftgantt.GanttChart;
 import org.swiftgantt.model.GanttModel;
 import org.swiftgantt.model.Task;
 import org.swiftgantt.ui.TimeUnit;
+
+import connector.JobDatabaseConnector;
+import jobschedule.JobScheduler;
+
 import java.text.*;
 import java.time.LocalDateTime;
 import javax.swing.GroupLayout.Alignment;
@@ -60,13 +65,13 @@ public class jobsDashboard extends javax.swing.JFrame {
         task2.setName("Sub-task 2");
         task2.setStart(new org.swiftgantt.common.Time(2017, 10, 19));
         task2.setEnd(new org.swiftgantt.common.Time(2017, 10, 21));// Since version 0.3.0, the end time set to a task is included in duration of the task
-
         taskGroup.add(new org.swiftgantt.model.Task[]{task1, task2});
-
         task2.addPredecessor(task1);
         model.addTask(taskGroup);*/
         gantt.setModel(model);
         gantt.setVisible(true);
+        
+        populateGantt();
         
         chartPanel.setLayout(new GridLayout());
 	chartPanel.add(gantt, null);
@@ -388,7 +393,6 @@ public class jobsDashboard extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -427,6 +431,47 @@ public class jobsDashboard extends javax.swing.JFrame {
         model.setKickoffTime( new org.swiftgantt.common.Time(koYear, koMonth, koDate));
         model.setDeadline( new org.swiftgantt.common.Time(dlYear, dlMonth, dlDate));
     }
+    private void populateGantt(){
+
+        /*Task taskGroup = new Task("My Work 1", new org.swiftgantt.common.Time(2017, 10, 17), new org.swiftgantt.common.Time(2017, 10, 30));
+        Task task1 = new Task("Sub-task 1", new org.swiftgantt.common.Time(2017, 10, 17), new org.swiftgantt.common.Time(2017, 10, 18));
+        org.swiftgantt.model.Task task2 = new Task();
+        task2.setName("Sub-task 2");
+        task2.setStart(new org.swiftgantt.common.Time(2017, 10, 19));
+        task2.setEnd(new org.swiftgantt.common.Time(2017, 10, 21));// Since version 0.3.0, the end time set to a task is included in duration of the task
+
+        taskGroup.add(new org.swiftgantt.model.Task[]{task1, task2});
+
+        task2.addPredecessor(task1);
+        model.addTask(taskGroup);*/
+        
+        //add tasks
+        JobScheduler js = new JobScheduler(startDate.toLocalDate());
+        JobDatabaseConnector jdc = new JobDatabaseConnector();
+        Task mechanicTaskGroups[] = new Task[5];
+        for (int i = 0; i < mechanicTaskGroups.length; i++){
+       	 mechanicTaskGroups[i] = new Task("Mechanic "+ (i+1), new org.swiftgantt.common.Time(koYear, koMonth, koDate), new org.swiftgantt.common.Time(dlYear, dlMonth, dlDate));
+       	 ResultSet rs = jdc.findJob("mechanicID", "=", (i+1));
+       	 try{
+       		 Task predecessor = null;
+       		 int iter = 0;
+       		 while(rs.next()){
+       			 Task job = new Task("Job: " + rs.getInt("jobID"), new org.swiftgantt.common.Time(rs.getTimestamp("jobStartDateHour")), new org.swiftgantt.common.Time(rs.getTime("jobEndDateHour")));
+       			 mechanicTaskGroups[i].add(job);
+       			 if(iter>0){
+       				 mechanicTaskGroups[i].addPredecessor(predecessor);
+       			 }
+       			 predecessor = job;
+       			 iter++;
+       		 }
+       	 }catch(Exception e){
+       		 e.printStackTrace();
+       	 }
+       	 model.addTask(mechanicTaskGroups[i]);
+        }
+        
+        gantt.setVisible(true);
+   }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> Category;
