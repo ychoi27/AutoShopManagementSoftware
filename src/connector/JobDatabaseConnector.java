@@ -344,6 +344,28 @@ public class JobDatabaseConnector {
 			return rs;
 		}
 	}
+	public ResultSet findJob(String attr, java.sql.Date value){
+		//search by jobLength, jobID, clientID or carID. 
+		try{
+			String q = "SELECT * FROM jobs WHERE " + attr + "=?";
+			pst = conn.prepareStatement(q);
+			switch(attr.toLowerCase()){
+			case "jobStartDateHour":
+				//Do SQL search for jobStartDateHour or jobEndDateHour value and set rs to result set
+				pst.setDate(1, value);
+				rs = pst.executeQuery();
+				return rs;
+			default:
+				rs= null;
+				return rs;
+			
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			rs= null;
+			return rs;
+		}
+	}
 	public int getMaxJobID(){
 		int max = 0;
 		try{

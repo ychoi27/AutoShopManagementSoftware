@@ -11,14 +11,13 @@ import connector.*;
 
 
 public class JobScheduler {
-	public /*public for testing purposes*/MaxHeap jobsList;
-	Mechanic mech[];
+	MaxHeap jobsList;
+	public Mechanic mech[];
 	JobDatabaseConnector jdc;
 	LocalDate startDate;
 	long maxBlocks;
 	LocalDateTime jobStartDateHour;
 	LocalDateTime endOfDay;
-	
 	
 	public JobScheduler(LocalDate startDate){
 		jobsList = new MaxHeap();
@@ -42,11 +41,14 @@ public class JobScheduler {
 		for(int i = 0; i <5; i++){
 			mech[i] = new Mechanic(i+1, maxBlocks);
 		}
-		
+		buildSchedule();
 	}
 	
 	public void scheduleJob(JobSchedulingBlock jsb){
 		buildSchedule();	
+	}
+	public java.sql.Date getStartDate(){
+		return java.sql.Date.valueOf(startDate);
 	}
 	
 	public void buildSchedule(){
@@ -80,8 +82,8 @@ public class JobScheduler {
 		writeJobsToDatabase();	
 	}
 		
-	/*should be private, made pulic for testing purposes*/
-	public JobSchedulingBlock[] populateListFromDatabase(){
+
+	private JobSchedulingBlock[] populateListFromDatabase(){
 		if(!jobsList.isEmpty()){
 			jobsList = new MaxHeap();
 		}

@@ -11,10 +11,15 @@ import java.time.ZoneId;
 public class TestDriver {
 	
 	public static void main(String[] args){
-		JobScheduler js = new JobScheduler(LocalDate.now());
-		JobSchedulingBlock job = new JobSchedulingBlock("sampleJobType", true, 1, 17);
 		
-		js.scheduleJob(job);
-		System.out.println("done");
+		JobDatabaseConnector jdc = new JobDatabaseConnector();
+		ResultSet rs = jdc.findJob("mechanicID", "=", 1);
+		try{
+		while(rs.next()){
+			System.out.println(rs.getInt("jobID"));
+		}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 }
