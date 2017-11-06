@@ -6,6 +6,9 @@
 package dashboards;
 
 import connector.SqliteConnection;
+
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -919,8 +922,9 @@ public class clientsDashboard extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-        setSize(new java.awt.Dimension(1776, 1578));
+        setSize(new java.awt.Dimension(screenSize.width, screenSize.height-100));
     }// </editor-fold>//GEN-END:initComponents
 
     private void firstNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstNameActionPerformed
