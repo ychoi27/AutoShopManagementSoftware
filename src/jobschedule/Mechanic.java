@@ -37,5 +37,9 @@ public class Mechanic {
 			active = jobs.getMax();
 		}
 	}
+	
+	public void setActive(JobSchedulingBlock jsb){
+		active = jsb;
+	}
 
 }

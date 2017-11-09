@@ -38,7 +38,7 @@ public class Dashboard {
 		navigationBar.setMaximumSize(navigationBar.getPreferredSize());
 		navigationBar.setLayout(new BoxLayout(navigationBar, BoxLayout.Y_AXIS));
 		navigationBar.setBorder(new EmptyBorder(0,10,0,10));
-		navigationBar.setBackground(Color.DARK_GRAY);
+		navigationBar.setBackground(Color.GRAY);
 		
 		mass = new JLabel("MASS: Mechanic Auto Shop Software");
 		

@@ -3,12 +3,14 @@ package dashboards;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+import jobschedule.JobScheduler;
 import jobschedule.JobSchedulingBlock;
 
 import java.awt.*;
 import java.awt.event.*;
 public class addJobWindow /*implements ActionListener*/{
-	JFrame window;
+	JobScheduler js;
+	JFrame aWindow;
 	
 	JPanel main;
 	JPanel header;
@@ -28,9 +30,13 @@ public class addJobWindow /*implements ActionListener*/{
 	JTextField clientID;
 	JTextField carID;
 	
+	public addJobWindow(JobScheduler js){
+		this.js = js;
+	}
+	
 	public void init(){
-		window = new JFrame();
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		aWindow = new JFrame();
+		aWindow.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		
 		header = new JPanel();
 		header.setBorder(new EmptyBorder(10,10,10,10));
@@ -58,7 +64,7 @@ public class addJobWindow /*implements ActionListener*/{
 		submitButton.addActionListener(new submitButtonListener());
 		
 		jobTypeLabel = new JLabel("Job type");
-		String jobTypeList[] = {"sampleJobType", "sampleJobType1", "sampleJobType2"};
+		String jobTypeList[] = {"sampleJobType", "sampleJobType2", "sampleJobType3"};
 		jobType = new JComboBox<String>(jobTypeList);
 		jobType.setSelectedIndex(0);
 		
@@ -87,32 +93,28 @@ public class addJobWindow /*implements ActionListener*/{
 		main.add(textAndField3);
 		main.add(walkIn);
 		
-		window.getContentPane().add(BorderLayout.NORTH, header);
-		window.getContentPane().add(BorderLayout.CENTER, main);
-		window.getContentPane().add(BorderLayout.SOUTH, footer);
-		window.setSize(400,300);
+		aWindow.getContentPane().add(BorderLayout.NORTH, header);
+		aWindow.getContentPane().add(BorderLayout.CENTER, main);
+		aWindow.getContentPane().add(BorderLayout.SOUTH, footer);
+		aWindow.setSize(400,300);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		window.setLocation(dim.width/2-window.getSize().width/2, dim.height/2-window.getSize().height/2);
-		window.setVisible(true);
+		aWindow.setLocation(dim.width/2-aWindow.getSize().width/2, dim.height/2-aWindow.getSize().height/2);
+		aWindow.setVisible(true);
 	}
 	
-	public static void main(String[] args){
-		addJobWindow ajw = new addJobWindow();
-		ajw.init();
-	}
 	class submitButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent event){
 			String jobTypeInput = (String)jobType.getSelectedItem();
 			boolean walkInInput = walkIn.isSelected();
 			int clientIDInput = Integer.parseInt(clientID.getText());
 			int carIDInput = Integer.parseInt(carID.getText());
+
+			js.scheduleJob(new JobSchedulingBlock(jobTypeInput, walkInInput, clientIDInput, carIDInput));
 			
-			JobSchedulingBlock jsb = new JobSchedulingBlock(jobTypeInput, walkInInput, clientIDInput, carIDInput);
+			aWindow.setVisible(false);
 			
-			window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
 			
 			//if client or car do not exist in the database, pop up error message: implement later
-			
 			
 			
 		}
