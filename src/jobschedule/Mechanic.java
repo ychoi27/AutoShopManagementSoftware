@@ -2,8 +2,8 @@ package jobschedule;
 import connector.*;
 
 public class Mechanic {
-	JobSchedulingBlock active;
-	MaxHeap jobs;
+	public JobSchedulingBlock active;
+	public MaxHeap jobs;
 	long maxBlocks;
 	int blocksScheduled;
 	JobDatabaseConnector jdc;
@@ -35,11 +35,17 @@ public class Mechanic {
 		if(jobs.peekMax() != null){
 			jobs.peekMax().setJobStatus("active");
 			active = jobs.getMax();
+		}else{
+			active = null;
 		}
 	}
 	
 	public void setActive(JobSchedulingBlock jsb){
 		active = jsb;
+	}
+	
+	public int getID(){
+		return mechanicID;
 	}
 
 }

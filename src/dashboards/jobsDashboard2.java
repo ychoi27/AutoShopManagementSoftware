@@ -13,6 +13,7 @@ import org.swiftgantt.ui.TimeUnit;
 import connector.JobDatabaseConnector;
 import jobschedule.JobScheduler;
 import jobschedule.JobSchedulingBlock;
+import jobschedule.Mechanic;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -236,8 +237,6 @@ public class jobsDashboard2 extends Dashboard{
     }
 	
 	public static void main(String[] args){
-		JobSchedulingBlock jsb = new JobSchedulingBlock("sampleJobType", false, 1, 17);
-		
 		jobsDashboard2 jd = new jobsDashboard2();
 		jd.init();
 	}
@@ -313,13 +312,18 @@ public class jobsDashboard2 extends Dashboard{
 	class deleteJobButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent event){
 			int jobID = jtm.jobID;
-			int row = jtm.row;
-			JobDatabaseConnector jdc = new JobDatabaseConnector();
-			if(jdc.jobStatus(jobID).equals("active")){
-				js.mech[jdc.mechanicID(jobID)-1].setActive(null);
+			js.removeJob(jobID);
+			for(Mechanic mechanic: js.mech){
+				if (mechanic.active == null){
+					for(Mechanic innerMech: js.mech){
+						if (mechanic.jobs.peekMax() != null){
+							mechanic.active = innerMech.jobs.getMax();
+							mechanic.active.setMechanic(mechanic.getID());
+							mechanic.active.setJobStatus("active");
+						}
+					}
+				}
 			}
-			jdc.deleteJob(jobID);
-			redrawGantt();
 		
 		}
 	}
