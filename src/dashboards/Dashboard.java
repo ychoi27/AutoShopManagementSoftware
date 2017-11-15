@@ -15,7 +15,7 @@ public class Dashboard {
 	
 	JButton jobs;
 	JButton clients;
-	JButton orders;
+	JButton signOut;
 	JButton parts;
 	
 	public Dashboard(){
@@ -24,7 +24,7 @@ public class Dashboard {
 	
 	public void init(){
 		window = new JFrame("MASS");
-		window.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		window.setSize(dim.width, dim.height);
@@ -43,27 +43,27 @@ public class Dashboard {
 		mass = new JLabel("MASS: Mechanic Auto Shop Software");
 		
 		jobs = new JButton("Jobs");
-		jobs.setMinimumSize(new Dimension(100,175));
+		jobs.setMinimumSize(new Dimension(100,200));
 		jobs.setMaximumSize(new Dimension(100,175));
 		jobs.addActionListener(new jobsButtonListener());
-		clients = new JButton("Clients");
-		clients.setMinimumSize(new Dimension(100,175));
+		clients = new JButton("Customers");
+		clients.setMinimumSize(new Dimension(100,200));
 		clients.setMaximumSize(new Dimension(100,175));
 		clients.addActionListener(new clientsButtonListener());
-		orders = new JButton("Orders");
-		orders.setMinimumSize(new Dimension(100,175));
-		orders.setMaximumSize(new Dimension(100,175));
-		orders.addActionListener(new ordersButtonListener());
-		parts = new JButton("Parts");
-		parts.setMinimumSize(new Dimension(100,175));
+		parts = new JButton("Inventory");
+		parts.setMinimumSize(new Dimension(100,200));
 		parts.setMaximumSize(new Dimension(100,175));
 		parts.addActionListener(new partsButtonListener());
+		signOut = new JButton("Sign out");
+		signOut.setMinimumSize(new Dimension(100,200));
+		signOut.setMaximumSize(new Dimension(100,175));
+		signOut.addActionListener(new signOutButtonListener());
 		
 		header.add(mass);
 		navigationBar.add(jobs);
 		navigationBar.add(clients);
-		navigationBar.add(orders);
 		navigationBar.add(parts);
+		navigationBar.add(signOut);
 		
 		
 		window.add(BorderLayout.NORTH, header);
@@ -85,14 +85,14 @@ public class Dashboard {
 			window.setVisible(false);
 		}
 	}
-	class ordersButtonListener implements ActionListener{
+	class partsButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent event){
-			//close and launch orders dash
-			PartsOrderDash od = new PartsOrderDash();
-			od.init();
+			partsDashboard pd = new partsDashboard();
+			pd.init();
+			window.setVisible(false);
 		}
 	}
-	class partsButtonListener implements ActionListener{
+	class signOutButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent event){
 			//close and launch parts dash
 		}

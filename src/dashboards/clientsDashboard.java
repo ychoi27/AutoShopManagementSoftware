@@ -1261,7 +1261,7 @@ try{
     private void inventoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inventoryButtonActionPerformed
         // TODO add your handling code here:
         partsDashboard partsDash = new partsDashboard();
-        partsDash.setVisible(true);
+        partsDash.init();
         dispose();
 
     }//GEN-LAST:event_inventoryButtonActionPerformed

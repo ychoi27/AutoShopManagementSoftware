@@ -93,6 +93,18 @@ public class PartDatabaseConnector {
        }
     	
     }
+	public ResultSet getAllParts(){
+		try{
+			String q = "SELECT parts_id, partsName, partsQuantity, parts_serial_number FROM parts";
+			pst = conn.prepareStatement(q);
+			rs = pst.executeQuery();
+			return rs;
+		}catch(Exception e){
+			e.printStackTrace();
+			rs= null;
+			return rs;
+		}
+	}
     public int getPartQuantity(int partID){
     	int result=0;
     	try{
