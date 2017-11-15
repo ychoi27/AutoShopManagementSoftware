@@ -133,7 +133,9 @@ public class jobsDashboard2 extends Dashboard{
 		deleteJob = new JButton("Delete job");
 		deleteJob.addActionListener(new deleteJobButtonListener());
 		increasePriority = new JButton("Increase job priority");
+	//	increasePriority.addActionListener(new increasePriorityButtonListener());
 		decreasePriority = new JButton("Decrease job priority");
+	//	decreasePriority.addActionListener(new decreasePriorityButtonListener());
 		
 		refreshSchedule = new JButton("Refresh schedule");
 		refreshSchedule.addActionListener(new refreshScheduleButtonListener());
@@ -309,6 +311,7 @@ public class jobsDashboard2 extends Dashboard{
 		}
 	}
 	
+	//not functioning properly
 	class deleteJobButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent event){
 			int jobID = jtm.jobID;

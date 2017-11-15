@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Dashboard {
-	JFrame window;
+	public JFrame window;
 	
 	JPanel header;
 	JPanel navigationBar;
@@ -24,7 +24,7 @@ public class Dashboard {
 	
 	public void init(){
 		window = new JFrame("MASS");
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		window.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		window.setSize(dim.width, dim.height);
@@ -45,15 +45,19 @@ public class Dashboard {
 		jobs = new JButton("Jobs");
 		jobs.setMinimumSize(new Dimension(100,175));
 		jobs.setMaximumSize(new Dimension(100,175));
+		jobs.addActionListener(new jobsButtonListener());
 		clients = new JButton("Clients");
 		clients.setMinimumSize(new Dimension(100,175));
 		clients.setMaximumSize(new Dimension(100,175));
+		clients.addActionListener(new clientsButtonListener());
 		orders = new JButton("Orders");
 		orders.setMinimumSize(new Dimension(100,175));
 		orders.setMaximumSize(new Dimension(100,175));
+		orders.addActionListener(new ordersButtonListener());
 		parts = new JButton("Parts");
 		parts.setMinimumSize(new Dimension(100,175));
 		parts.setMaximumSize(new Dimension(100,175));
+		parts.addActionListener(new partsButtonListener());
 		
 		header.add(mass);
 		navigationBar.add(jobs);
@@ -69,16 +73,23 @@ public class Dashboard {
 	class jobsButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent event){
 			//close and launch jobs dash
+			jobsDashboard2 jd= new jobsDashboard2();
+			jd.init();
+			window.setVisible(false);
 		}
 	}
 	class clientsButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent event){
-			//close and launch clients dash
+			clientsDashboard cd = new clientsDashboard();
+			cd.setVisible(true);
+			window.setVisible(false);
 		}
 	}
 	class ordersButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent event){
 			//close and launch orders dash
+			PartsOrderDash od = new PartsOrderDash();
+			od.init();
 		}
 	}
 	class partsButtonListener implements ActionListener{

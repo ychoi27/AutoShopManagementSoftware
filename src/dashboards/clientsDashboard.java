@@ -1253,8 +1253,8 @@ try{
     private void jobsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jobsButtonActionPerformed
         // TODO add your handling code here:
         
-        jobsDashboard jobsDash = new jobsDashboard();
-        jobsDash.setVisible(true);
+        jobsDashboard2 jobsDash = new jobsDashboard2();
+        jobsDash.init();
         dispose();
     }//GEN-LAST:event_jobsButtonActionPerformed
 

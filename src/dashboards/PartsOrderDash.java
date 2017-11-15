@@ -108,11 +108,6 @@ public class PartsOrderDash extends Dashboard {
 	        return new DefaultTableModel(data, columnNames);
 
 	    }
-	 
-	public static void main(String[] args){
-		PartsOrderDash pod = new PartsOrderDash();
-		pod.init();
-	}
 	
 	class createOrderButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent event){
