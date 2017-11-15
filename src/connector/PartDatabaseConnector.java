@@ -36,7 +36,7 @@ public class PartDatabaseConnector {
     			Calendar calendar = Calendar.getInstance();
     			calendar.add(Calendar.DATE, 2);
     			java.sql.Date arrivalDate = new java.sql.Date(calendar.getTime().getTime());
-    			odc.createOrder(partID, arrivalDate);
+    			odc.createOrder(partID, arrivalDate, partsNeeded);
     			return false;
     		
     		}else{

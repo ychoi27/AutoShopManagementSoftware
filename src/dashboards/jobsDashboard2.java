@@ -37,6 +37,7 @@ public class jobsDashboard2 extends Dashboard{
 	JButton deleteJob;
 	JButton increasePriority;
 	JButton decreasePriority;
+	JButton restorePriority;
 	JButton refreshSchedule;
 	JButton lastWeek;
 	JButton thisWeek;
@@ -132,10 +133,12 @@ public class jobsDashboard2 extends Dashboard{
 		
 		deleteJob = new JButton("Delete job");
 		deleteJob.addActionListener(new deleteJobButtonListener());
-		increasePriority = new JButton("Increase job priority");
-	//	increasePriority.addActionListener(new increasePriorityButtonListener());
-		decreasePriority = new JButton("Decrease job priority");
-	//	decreasePriority.addActionListener(new decreasePriorityButtonListener());
+		increasePriority = new JButton("Float job");
+		increasePriority.addActionListener(new increasePriorityButtonListener());
+		decreasePriority = new JButton("Sink job");
+		decreasePriority.addActionListener(new decreasePriorityButtonListener());
+		restorePriority = new JButton("Restore job priority");
+		restorePriority.addActionListener(new restorePriorityButtonListener());
 		
 		refreshSchedule = new JButton("Refresh schedule");
 		refreshSchedule.addActionListener(new refreshScheduleButtonListener());
@@ -147,6 +150,7 @@ public class jobsDashboard2 extends Dashboard{
 		functions.add(deleteJob);
 		functions.add(increasePriority);
 		functions.add(decreasePriority);
+		functions.add(restorePriority);
 		functions.add(refreshSchedule);
 		main.add(functions);
 		
@@ -212,6 +216,12 @@ public class jobsDashboard2 extends Dashboard{
     	gantt.setVisible(true);
     }
     
+    private void refreshPage(){
+    	jobsDashboard2 jd = new jobsDashboard2();
+    	jd.init();
+    	window.setVisible(false);
+    }
+    
     public static DefaultTableModel buildTableModel(ResultSet rs)
             throws SQLException {
 
@@ -252,7 +262,7 @@ public class jobsDashboard2 extends Dashboard{
 	
 	class refreshScheduleButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent event){
-			redrawGantt();
+			refreshPage();
 		}
 	}
 	
@@ -316,18 +326,22 @@ public class jobsDashboard2 extends Dashboard{
 		public void actionPerformed(ActionEvent event){
 			int jobID = jtm.jobID;
 			js.removeJob(jobID);
-			for(Mechanic mechanic: js.mech){
-				if (mechanic.active == null){
-					for(Mechanic innerMech: js.mech){
-						if (mechanic.jobs.peekMax() != null){
-							mechanic.active = innerMech.jobs.getMax();
-							mechanic.active.setMechanic(mechanic.getID());
-							mechanic.active.setJobStatus("active");
-						}
-					}
-				}
-			}
 		
+		}
+	}
+	class increasePriorityButtonListener implements ActionListener{
+		public void actionPerformed(ActionEvent event){
+			js.increaseJobPriority(jtm.jobID);
+		}
+	}
+	class decreasePriorityButtonListener implements ActionListener{
+		public void actionPerformed(ActionEvent event){
+			js.decreaseJobPriority(jtm.jobID);
+		}
+	}
+	class restorePriorityButtonListener implements ActionListener{
+		public void actionPerformed(ActionEvent event){
+			js.restoreJobPriority(jtm.jobID);
 		}
 	}
 	

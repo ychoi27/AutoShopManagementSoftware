@@ -63,7 +63,6 @@ public class JobSchedulingBlock {
 			System.out.println(rs.getString("jobStatus"));
 			this.jobStatus = rs.getString("jobStatus");
 			this.handicap = rs.getDouble("handicap");
-			this.priority = rs.getDouble("priority");
 			this.partsAvailable = rs.getBoolean("partsAvailable");
 			this.jobLength = rs.getInt("jobLength");
 			this.jobID = rs.getInt("jobID");
@@ -72,12 +71,14 @@ public class JobSchedulingBlock {
 			this.jobStartDateHour = rs.getTimestamp("jobStartDateHour");
 			this.jobEndDateHour = rs.getTimestamp("jobEndDateHour");
 			this.datePartsIn = rs.getDate("datePartsIn");
+			generatePriority();
 		}
 		
 		}catch(Exception e){
 			e.printStackTrace();
 			System.exit(-1);
 		}
+		//jdc.updateJobAttribute(jobID, "priority", this.priority);
 		
 		
 	}

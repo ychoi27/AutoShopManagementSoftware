@@ -128,12 +128,20 @@ public class JobScheduler {
 		}
 	}
 	public void removeJob(int jobID){
-		for(Mechanic mechanic: mech){
-			if (mechanic.active != null && mechanic.active.getJobID() == jobID){
-				mechanic.completeJob();
-				return;
-			}
-		}
 		jdc.deleteJob(jobID);
+		buildSchedule();
+	}
+	
+	public void increaseJobPriority(int jobID){
+		jdc.updateJobAttribute(jobID, "handicap", 10);
+		buildSchedule();
+	}
+	public void decreaseJobPriority(int jobID){
+		jdc.updateJobAttribute(jobID, "handicap", 0.1);
+		buildSchedule();
+	}
+	public void restoreJobPriority(int jobID){
+		jdc.updateJobAttribute(jobID, "handicap", 1);
+		buildSchedule();
 	}
 }

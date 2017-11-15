@@ -1,21 +1,17 @@
 package test;
-//new changes
-import connector.JobDatabaseConnector;
-import dashboards.Dashboard;
-import dashboards.jobsDashboard2;
-import dashboards.partsDashboard;
-import jobschedule.*;
-import java.util.*;
-import java.sql.*;
+
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+
+import dashboards.jobsDashboard2;
+import jobschedule.JobScheduler;
+import jobschedule.JobSchedulingBlock;
 
 public class TestDriver {
 	
 	public static void main(String[] args){
-		partsDashboard db = new partsDashboard();
+		jobsDashboard2 db = new jobsDashboard2();
 		db.init();
+
 	}
 
 }

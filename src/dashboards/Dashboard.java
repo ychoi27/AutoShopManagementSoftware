@@ -18,9 +18,6 @@ public class Dashboard {
 	JButton signOut;
 	JButton parts;
 	
-	public Dashboard(){
-		init();
-	}
 	
 	public void init(){
 		window = new JFrame("MASS");
