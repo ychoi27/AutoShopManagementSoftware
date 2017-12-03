@@ -92,6 +92,9 @@ public class Dashboard {
 	class signOutButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent event){
 			//close and launch parts dash
+			loginDashboard ld = new loginDashboard();
+			ld.setVisible(true);
+			window.setVisible(false);
 		}
 	}
 

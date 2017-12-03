@@ -73,13 +73,13 @@ public class JobSchedulingBlock {
 			this.datePartsIn = rs.getDate("datePartsIn");
 			generatePriority();
 		}
+		rs.close();
 		
 		}catch(Exception e){
 			e.printStackTrace();
 			System.exit(-1);
 		}
-		//jdc.updateJobAttribute(jobID, "priority", this.priority);
-		
+		//updateJobPriorityInDB();
 		
 	}
 	
@@ -126,6 +126,10 @@ public class JobSchedulingBlock {
 	public void setJobEndDateHour(java.sql.Timestamp jobEndDateHour){
 		jdc.updateJobAttribute(this.jobID, "jobEndDateHour", jobEndDateHour);
 		this.jobEndDateHour = jobEndDateHour;
+	}
+	
+	public void updateJobPriorityInDB(){
+		jdc.updateJobAttribute(jobID, "priority", this.priority);
 	}
 	
 	

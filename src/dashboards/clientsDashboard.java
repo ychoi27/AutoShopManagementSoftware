@@ -158,7 +158,7 @@ public class clientsDashboard extends javax.swing.JFrame {
         setMaximumSize(new java.awt.Dimension(1784, 1499));
         setMinimumSize(new java.awt.Dimension(1784, 1499));
         setPreferredSize(new java.awt.Dimension(1784, 1499));
-        setResizable(false);
+        setResizable(true);
 
         mainPanel.setBackground(new java.awt.Color(153, 255, 153));
         mainPanel.setMaximumSize(new java.awt.Dimension(1784, 1499));
