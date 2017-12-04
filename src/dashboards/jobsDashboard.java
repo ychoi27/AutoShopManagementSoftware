@@ -6,7 +6,9 @@
 package dashboards;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.sql.ResultSet;
 import java.util.Calendar;
 import javax.swing.JScrollPane;
@@ -25,6 +27,8 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 /**
  *
@@ -92,6 +96,10 @@ public class jobsDashboard extends javax.swing.JFrame {
         customerButton = new javax.swing.JButton();
         signoutButton = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
+        backButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
         addJobButton = new javax.swing.JButton();
         searchInput = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
@@ -99,7 +107,6 @@ public class jobsDashboard extends javax.swing.JFrame {
         allJobsTable = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jobDescription = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
         refreshTable = new javax.swing.JButton();
         nextDate = new javax.swing.JButton();
         previousDate = new javax.swing.JButton();
@@ -112,7 +119,6 @@ public class jobsDashboard extends javax.swing.JFrame {
         });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1345, 1251));
         setResizable(false);
 
         jobsButton.setText("JOBS");
@@ -176,9 +182,6 @@ public class jobsDashboard extends javax.swing.JFrame {
         ));
         allJobsTable.setViewportView(jTable1);
 
-        jTextPane1.setText("<JobDescriptions>");
-        jobDescription.setViewportView(jTextPane1);
-
         refreshTable.setText("Refresh");
 
         nextDate.setText("Next week");
@@ -215,92 +218,89 @@ public class jobsDashboard extends javax.swing.JFrame {
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         layout.setHorizontalGroup(
-        	layout.createParallelGroup(Alignment.LEADING)
+        	layout.createParallelGroup(Alignment.TRAILING)
         		.addGroup(layout.createSequentialGroup()
+        			.addContainerGap()
+        			.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
+        				.addComponent(jobsButton, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(inventoryButton, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(customerButton, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(signoutButton, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(backButton, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE))
+        			.addPreferredGap(ComponentPlacement.RELATED)
         			.addGroup(layout.createParallelGroup(Alignment.TRAILING)
-        				.addComponent(jobsButton, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-        				.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        					.addComponent(signoutButton, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-        					.addComponent(backButton, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE))
-        				.addComponent(inventoryButton, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-        				.addComponent(customerButton, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE))
-        			.addGap(18)
-        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        				.addGroup(layout.createSequentialGroup()
+        					.addComponent(searchInput, GroupLayout.PREFERRED_SIZE, 210, GroupLayout.PREFERRED_SIZE)
+        					.addGap(18)
+        					.addComponent(Category, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
+        					.addPreferredGap(ComponentPlacement.UNRELATED)
+        					.addComponent(searchButton))
         				.addGroup(layout.createSequentialGroup()
         					.addGroup(layout.createParallelGroup(Alignment.LEADING)
         						.addGroup(layout.createSequentialGroup()
         							.addGap(6)
-        							.addComponent(chartPanel, GroupLayout.DEFAULT_SIZE, 866, Short.MAX_VALUE))
+        							.addComponent(chartPanel, GroupLayout.DEFAULT_SIZE, 618, Short.MAX_VALUE))
         						.addGroup(layout.createSequentialGroup()
         							.addComponent(previousDate, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
         							.addGap(18)
         							.addComponent(btnCurrentWeek)
         							.addGap(18)
         							.addComponent(nextDate, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)))
-        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addGap(171)
         					.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        						.addComponent(allJobsTable, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE)
-        						.addComponent(jobDescription, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE))
-        					.addGap(490))
-        				.addGroup(layout.createSequentialGroup()
-        					.addComponent(addJobButton, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-        					.addPreferredGap(ComponentPlacement.RELATED, 870, Short.MAX_VALUE)
-        					.addComponent(refreshTable, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-        					.addPreferredGap(ComponentPlacement.RELATED)
-        					.addComponent(searchInput, GroupLayout.PREFERRED_SIZE, 210, GroupLayout.PREFERRED_SIZE)
-        					.addGap(18)
-        					.addComponent(Category, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
-        					.addPreferredGap(ComponentPlacement.UNRELATED)
-        					.addComponent(searchButton)
-        					.addContainerGap())))
+        						.addComponent(refreshTable, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 328, GroupLayout.PREFERRED_SIZE)
+        						.addComponent(allJobsTable, GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
+        						.addComponent(jobDescription, GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
+        						.addComponent(addJobButton, GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE))))
+        			.addGap(25))
         );
         layout.setVerticalGroup(
         	layout.createParallelGroup(Alignment.LEADING)
         		.addGroup(layout.createSequentialGroup()
+        			.addGap(60)
+        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(previousDate)
+        				.addComponent(btnCurrentWeek)
+        				.addComponent(nextDate))
+        			.addPreferredGap(ComponentPlacement.RELATED)
         			.addGroup(layout.createParallelGroup(Alignment.LEADING)
         				.addGroup(layout.createSequentialGroup()
-        					.addGap(25)
         					.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        						.addComponent(chartPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         						.addGroup(layout.createSequentialGroup()
-        							.addComponent(allJobsTable, GroupLayout.PREFERRED_SIZE, 282, GroupLayout.PREFERRED_SIZE)
+        							.addComponent(jobsButton, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)
         							.addPreferredGap(ComponentPlacement.RELATED)
-        							.addComponent(jobDescription, GroupLayout.PREFERRED_SIZE, 199, GroupLayout.PREFERRED_SIZE))
-        						.addGroup(layout.createSequentialGroup()
-        							.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-        								.addComponent(previousDate)
-        								.addComponent(btnCurrentWeek)
-        								.addComponent(nextDate))
-        							.addPreferredGap(ComponentPlacement.RELATED)
-        							.addComponent(chartPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-        					.addGap(116))
+        							.addComponent(inventoryButton, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)))
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addComponent(customerButton, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE)
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addComponent(signoutButton, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addComponent(backButton, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE))
         				.addGroup(layout.createSequentialGroup()
-        					.addGap(7)
-        					.addComponent(jobsButton, GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
+        					.addComponent(allJobsTable, GroupLayout.PREFERRED_SIZE, 276, GroupLayout.PREFERRED_SIZE)
         					.addPreferredGap(ComponentPlacement.UNRELATED)
-        					.addComponent(inventoryButton, GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
-        					.addPreferredGap(ComponentPlacement.UNRELATED)
-        					.addComponent(customerButton, GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
-        					.addPreferredGap(ComponentPlacement.RELATED)))
-        			.addGroup(layout.createParallelGroup(Alignment.TRAILING)
-        				.addGroup(layout.createSequentialGroup()
-        					.addComponent(signoutButton, GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE)
-        					.addPreferredGap(ComponentPlacement.UNRELATED)
-        					.addComponent(backButton, GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
-        					.addGap(12))
-        				.addGroup(layout.createSequentialGroup()
-        					.addGap(0, 645, Short.MAX_VALUE)
-        					.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-        						.addComponent(searchInput, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-        						.addComponent(searchButton)
-        						.addComponent(Category, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-        						.addComponent(addJobButton)
-        						.addComponent(refreshTable))))
+        					.addComponent(jobDescription, GroupLayout.PREFERRED_SIZE, 199, GroupLayout.PREFERRED_SIZE)
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addComponent(addJobButton)))
+        			.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        			.addComponent(refreshTable)
+        			.addGap(91)
+        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(searchInput, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(searchButton)
+        				.addComponent(Category, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
         			.addContainerGap())
         );
+        jTextPane1 = new javax.swing.JTextPane();
+        jobDescription.setViewportView(jTextPane1);
+        
+                jTextPane1.setText("<JobDescriptions>");
         getContentPane().setLayout(layout);
-
-        setSize(new java.awt.Dimension(1649, 1330));
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        setSize(new java.awt.Dimension(screenSize.width, screenSize.height-100));
         setLocationRelativeTo(null);
+
     }// </editor-fold>//GEN-END:initComponents
 
     private void jobsButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jobsButtonMouseClicked

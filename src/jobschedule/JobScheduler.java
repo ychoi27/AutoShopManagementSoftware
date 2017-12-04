@@ -114,9 +114,11 @@ public class JobScheduler {
 	private void writeJobsToDatabase(){
 		for(Mechanic mechanic: mech){
 			LocalDateTime jobCursor = jobStartDateHour;
-			mechanic.active.setJobStartDateHour(java.sql.Timestamp.valueOf(jobCursor));
-			mechanic.active.setJobEndDateHour(java.sql.Timestamp.valueOf(jobCursor.plusMinutes(30*mechanic.active.getJobLength())));
-			jobCursor = jobCursor.plusMinutes(30*mechanic.active.getJobLength());
+			if(mechanic.active != null){
+				mechanic.active.setJobStartDateHour(java.sql.Timestamp.valueOf(jobCursor));
+				mechanic.active.setJobEndDateHour(java.sql.Timestamp.valueOf(jobCursor.plusMinutes(30*mechanic.active.getJobLength())));
+				jobCursor = jobCursor.plusMinutes(30*mechanic.active.getJobLength());
+			}
 			while(mechanic.jobs.peekMax()!=null){
 				mechanic.jobs.peekMax().setJobStartDateHour(java.sql.Timestamp.valueOf(jobCursor));
 				mechanic.jobs.peekMax().setJobEndDateHour(java.sql.Timestamp.valueOf(jobCursor.plusMinutes(30*mechanic.jobs.peekMax().getJobLength())));
@@ -124,5 +126,22 @@ public class JobScheduler {
 				mechanic.jobs.getMax();
 			}
 		}
+	}
+	public void removeJob(int jobID){
+		jdc.deleteJob(jobID);
+		buildSchedule();
+	}
+	
+	public void increaseJobPriority(int jobID){
+		jdc.updateJobAttribute(jobID, "handicap", 10);
+		buildSchedule();
+	}
+	public void decreaseJobPriority(int jobID){
+		jdc.updateJobAttribute(jobID, "handicap", 0.1);
+		buildSchedule();
+	}
+	public void restoreJobPriority(int jobID){
+		jdc.updateJobAttribute(jobID, "handicap", 1);
+		buildSchedule();
 	}
 }

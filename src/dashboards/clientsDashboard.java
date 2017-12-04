@@ -6,6 +6,9 @@
 package dashboards;
 
 import connector.SqliteConnection;
+
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -155,7 +158,7 @@ public class clientsDashboard extends javax.swing.JFrame {
         setMaximumSize(new java.awt.Dimension(1784, 1499));
         setMinimumSize(new java.awt.Dimension(1784, 1499));
         setPreferredSize(new java.awt.Dimension(1784, 1499));
-        setResizable(false);
+        setResizable(true);
 
         mainPanel.setBackground(new java.awt.Color(153, 255, 153));
         mainPanel.setMaximumSize(new java.awt.Dimension(1784, 1499));
@@ -919,8 +922,9 @@ public class clientsDashboard extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-        setSize(new java.awt.Dimension(1776, 1578));
+        setSize(new java.awt.Dimension(screenSize.width, screenSize.height-100));
     }// </editor-fold>//GEN-END:initComponents
 
     private void firstNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstNameActionPerformed
@@ -1249,15 +1253,15 @@ try{
     private void jobsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jobsButtonActionPerformed
         // TODO add your handling code here:
         
-        jobsDashboard jobsDash = new jobsDashboard();
-        jobsDash.setVisible(true);
+        jobsDashboard2 jobsDash = new jobsDashboard2();
+        jobsDash.init();
         dispose();
     }//GEN-LAST:event_jobsButtonActionPerformed
 
     private void inventoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inventoryButtonActionPerformed
         // TODO add your handling code here:
         partsDashboard partsDash = new partsDashboard();
-        partsDash.setVisible(true);
+        partsDash.init();
         dispose();
 
     }//GEN-LAST:event_inventoryButtonActionPerformed

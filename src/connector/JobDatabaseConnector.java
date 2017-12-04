@@ -207,6 +207,38 @@ public class JobDatabaseConnector {
 	    }
 		
 	}
+	public String jobStatus(int jobID){
+		try{
+			String q = "SELECT jobStatus FROM jobs WHERE jobID=?";
+			pst= conn.prepareStatement(q);
+			pst.setInt(1, jobID);
+			rs = pst.executeQuery();
+			while(rs.next()){
+				return rs.getString("jobStatus");
+			}
+		}catch(Exception e){
+			rs=null;
+			return "";
+			//deal with exception
+		}
+		return "";
+	}
+	public int mechanicID(int jobID){
+		try{
+			String q = "SELECT mechanicID FROM jobs WHERE jobID=?";
+			pst= conn.prepareStatement(q);
+			pst.setInt(1, jobID);
+			rs = pst.executeQuery();
+			while(rs.next()){
+				return rs.getInt("mechanicID");
+			}
+		}catch(Exception e){
+			rs=null;
+			return -100;
+			//deal with exception
+		}
+		return -100;
+	}
 	public ResultSet getCurrentJobsByID(java.sql.Date currentDate){
 		try{
 			String q = "SELECT jobID FROM jobs WHERE datePartsIn<=?";
@@ -360,6 +392,19 @@ public class JobDatabaseConnector {
 				return rs;
 			
 			}
+		}catch(Exception e){
+			e.printStackTrace();
+			rs= null;
+			return rs;
+		}
+	}
+	
+	public ResultSet getAllJobs(){
+		try{
+			String q = "SELECT jobs.jobID, jobs.jobStatus, jobs.mechanicID, client.lastName,  client.firstName, car.color, car.year, car.brand, car.model, jobTypes.jobType FROM ((jobs INNER JOIN client ON client.clientId = jobs.clientID) INNER JOIN car ON car.client_id = client.clientId)  INNER JOIN jobTypes ON jobs.jobTypeID = jobTypes.jobTypeID;";
+			pst = conn.prepareStatement(q);
+			rs = pst.executeQuery();
+			return rs;
 		}catch(Exception e){
 			e.printStackTrace();
 			rs= null;

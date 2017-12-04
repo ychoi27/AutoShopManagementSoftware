@@ -1,25 +1,17 @@
 package test;
-//new changes
-import connector.JobDatabaseConnector;
-import jobschedule.*;
-import java.util.*;
-import java.sql.*;
+
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+
+import dashboards.jobsDashboard2;
+import jobschedule.JobScheduler;
+import jobschedule.JobSchedulingBlock;
 
 public class TestDriver {
 	
 	public static void main(String[] args){
-		
-		JobDatabaseConnector jdc = new JobDatabaseConnector();
-		ResultSet rs = jdc.findJob("mechanicID", "=", 1);
-		try{
-		while(rs.next()){
-			System.out.println(rs.getInt("jobID"));
-		}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		jobsDashboard2 db = new jobsDashboard2();
+		db.init();
+
 	}
+
 }

@@ -36,7 +36,7 @@ public class PartDatabaseConnector {
     			Calendar calendar = Calendar.getInstance();
     			calendar.add(Calendar.DATE, 2);
     			java.sql.Date arrivalDate = new java.sql.Date(calendar.getTime().getTime());
-    			odc.createOrder(partID, arrivalDate);
+    			odc.createOrder(partID, arrivalDate, partsNeeded);
     			return false;
     		
     		}else{
@@ -93,6 +93,18 @@ public class PartDatabaseConnector {
        }
     	
     }
+	public ResultSet getAllParts(){
+		try{
+			String q = "SELECT parts_id, partsName, partsQuantity, parts_serial_number FROM parts";
+			pst = conn.prepareStatement(q);
+			rs = pst.executeQuery();
+			return rs;
+		}catch(Exception e){
+			e.printStackTrace();
+			rs= null;
+			return rs;
+		}
+	}
     public int getPartQuantity(int partID){
     	int result=0;
     	try{
